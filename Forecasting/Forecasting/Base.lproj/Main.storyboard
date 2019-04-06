@@ -10,33 +10,33 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item 2-->
+        <!--Forecast Tab-->
         <scene sceneID="J0i-Ak-3jf">
             <objects>
-                <viewController id="eiS-QX-uYd" sceneMemberID="viewController">
+                <viewController id="eiS-QX-uYd" userLabel="Forecast Tab" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bbF-bv-eho">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="8MQ-1d-fll"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="w61-gL-T8z"/>
+                    <tabBarItem key="tabBarItem" title="Forecast" id="w61-gL-T8z" userLabel="Forecast"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RxX-0g-VTu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="990" y="260"/>
         </scene>
-        <!--Item 1-->
+        <!--Today Tab-->
         <scene sceneID="e0t-cg-THG">
             <objects>
-                <viewController id="o0B-Iy-G1f" sceneMemberID="viewController">
+                <viewController id="o0B-Iy-G1f" userLabel="Today Tab" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b9T-MP-rgU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="0cu-AJ-0Vo"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="93R-A9-zPO"/>
+                    <tabBarItem key="tabBarItem" title="Today" id="93R-A9-zPO" userLabel="Today"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Txh-wc-p3l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
