@@ -20,7 +20,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="8MQ-1d-fll"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Forecast" id="w61-gL-T8z" userLabel="Forecast"/>
+                    <tabBarItem key="tabBarItem" title="Forecast" image="ForecastIcon" id="w61-gL-T8z" userLabel="Forecast"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RxX-0g-VTu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -36,7 +36,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="0cu-AJ-0Vo"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Today" id="93R-A9-zPO" userLabel="Today"/>
+                    <tabBarItem key="tabBarItem" title="Today" image="TodayIcon" id="93R-A9-zPO" userLabel="Today"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Txh-wc-p3l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -61,4 +61,8 @@
             <point key="canvasLocation" x="70" y="-65"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ForecastIcon" width="22.5" height="22.5"/>
+        <image name="TodayIcon" width="24.5" height="24"/>
+    </resources>
 </document>
