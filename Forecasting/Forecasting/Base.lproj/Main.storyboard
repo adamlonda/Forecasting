@@ -29,7 +29,7 @@
         <!--Today Tab-->
         <scene sceneID="e0t-cg-THG">
             <objects>
-                <viewController id="o0B-Iy-G1f" userLabel="Today Tab" sceneMemberID="viewController">
+                <viewController id="o0B-Iy-G1f" userLabel="Today Tab" customClass="TodayViewController" customModule="Forecasting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b9T-MP-rgU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
