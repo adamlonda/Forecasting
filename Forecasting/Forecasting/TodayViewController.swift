@@ -9,8 +9,10 @@
 import UIKit
 
 class TodayViewController: UIViewController {
+    var locationService: LocationProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        _ = locationService?.getCurrentLocation()
     }
 }
