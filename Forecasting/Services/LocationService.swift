@@ -9,7 +9,7 @@
 import RxSwift
 
 class LocationService: LocationProtocol {
-    func getCurrentLocation() -> Observable<GpsCoords> {
+    var locationFeed: Observable<GpsCoords> {
         fatalError("Not implemented")
     }
 }

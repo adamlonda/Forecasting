@@ -13,6 +13,6 @@ class TodayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        _ = locationService?.getCurrentLocation()
+        _ = locationService?.locationFeed
     }
 }

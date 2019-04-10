@@ -9,5 +9,5 @@
 import RxSwift
 
 protocol LocationProtocol {
-    func getCurrentLocation() -> Observable<GpsCoords>
+    var locationFeed: Observable<GpsCoords> { get }
 }
