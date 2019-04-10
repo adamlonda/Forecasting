@@ -13,6 +13,8 @@ class TodayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        _ = locationService?.locationFeed
+        _ = locationService?.locationFeed.subscribe(onNext: { coord in
+            print("Latitude: \(coord.latitude) Longitude: \(coord.longitude)")
+        })
     }
 }
