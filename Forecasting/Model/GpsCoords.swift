@@ -6,7 +6,7 @@
 //  Copyright © 2019 Adam Londa. All rights reserved.
 //
 
-struct GpsCoords {
+struct GpsCoords : Equatable {
     let latitude: Double
     let longitude: Double
     
@@ -14,4 +14,9 @@ struct GpsCoords {
         self.latitude = latitude
         self.longitude = longitude
     }
+}
+
+func == (lhs: GpsCoords, rhs: GpsCoords) -> Bool {
+    return lhs.latitude == rhs.latitude
+        && lhs.longitude == rhs.longitude
 }

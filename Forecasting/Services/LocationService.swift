@@ -26,5 +26,6 @@ class LocationService: LocationProtocol {
                     latitude: Double(clLocation?.coordinate.latitude ?? 0),
                     longitude: Double(clLocation?.coordinate.longitude ?? 0))
             })
+            .distinctUntilChanged()
     }
 }
