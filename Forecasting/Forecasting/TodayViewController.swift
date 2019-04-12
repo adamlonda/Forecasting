@@ -6,16 +6,31 @@
 //  Copyright © 2019 Adam Londa. All rights reserved.
 //
 
+import RxSwift
 import UIKit
 
 class TodayViewController: UIViewController {
     var locationService: LocationProtocol?
+    var weatherService: WeatherProtocol?
+    
+    private func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {
+        guard self.weatherService != nil else {
+            fatalError("Should not happen.")
+        }
+        
+        return self.weatherService!.getCurrentWeather(
+            latitude: latitude,
+            longitude: longitude)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _ = locationService?.locationFeed.subscribe(onNext: { coord in
-            print("Latitude: \(coord.latitude) Longitude: \(coord.longitude)")
+        _ = locationService?.locationFeed.flatMap({
+            self.getCurrentWeather(latitude: $0.latitude, longitude: $0.longitude)
+        })
+        .subscribe(onNext: { currentWeather in
+            print("Location name: \(currentWeather.locationName)")
         })
         
         _ = locationService?.errorFeed.subscribe(onNext: { _ in
