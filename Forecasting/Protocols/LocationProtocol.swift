@@ -10,4 +10,5 @@ import RxSwift
 
 protocol LocationProtocol {
     var locationFeed: Observable<GpsCoords> { get }
+    var errorFeed: Observable<Error> { get }
 }

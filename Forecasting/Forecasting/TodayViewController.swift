@@ -13,8 +13,20 @@ class TodayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         _ = locationService?.locationFeed.subscribe(onNext: { coord in
             print("Latitude: \(coord.latitude) Longitude: \(coord.longitude)")
+        })
+        
+        _ = locationService?.errorFeed.subscribe(onNext: { _ in
+            let alert = UIAlertController(
+                title: "Geolocation Error",
+                message: "An error occured while getting your location. Please enable geolocation in your device settings for the Forecasting app, and try again.",
+                preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            
+            self.present(alert, animated: true, completion: nil)
         })
     }
 }

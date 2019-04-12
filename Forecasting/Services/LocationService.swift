@@ -28,4 +28,11 @@ class LocationService: LocationProtocol {
             })
             .distinctUntilChanged()
     }
+    
+    var errorFeed: Observable<Error> {
+        return manager.rx.didError
+            .map({ cLErrorEvent in
+                return cLErrorEvent.error
+            })
+    }
 }
