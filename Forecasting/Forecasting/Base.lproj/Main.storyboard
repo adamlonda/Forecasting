@@ -34,24 +34,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNP-wm-EBE" userLabel="Location Label">
-                                <rect key="frame" x="20" y="440.5" width="374" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1C8-Qu-MX6">
+                                <rect key="frame" x="20" y="425" width="374" height="51.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNP-wm-EBE" userLabel="Location Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wB-NC-59r" userLabel="Weather Label">
+                                        <rect key="frame" x="0.0" y="27.5" width="374" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="0.18431372549019609" green="0.56862745098039214" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="0cu-AJ-0Vo" firstAttribute="trailing" secondItem="MNP-wm-EBE" secondAttribute="trailing" constant="20" id="5I6-5N-osP"/>
-                            <constraint firstItem="MNP-wm-EBE" firstAttribute="centerY" secondItem="0cu-AJ-0Vo" secondAttribute="centerY" id="61h-f3-4BB"/>
-                            <constraint firstItem="MNP-wm-EBE" firstAttribute="leading" secondItem="0cu-AJ-0Vo" secondAttribute="leading" constant="20" id="tzH-tu-SqZ"/>
+                            <constraint firstItem="1C8-Qu-MX6" firstAttribute="leading" secondItem="0cu-AJ-0Vo" secondAttribute="leading" constant="20" id="9zU-bF-PW1"/>
+                            <constraint firstItem="1C8-Qu-MX6" firstAttribute="centerY" secondItem="0cu-AJ-0Vo" secondAttribute="centerY" id="QDF-YM-yKP"/>
+                            <constraint firstItem="0cu-AJ-0Vo" firstAttribute="trailing" secondItem="1C8-Qu-MX6" secondAttribute="trailing" constant="20" id="sVa-mR-Nzx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0cu-AJ-0Vo"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Today" image="TodayIcon" id="93R-A9-zPO" userLabel="Today"/>
                     <connections>
                         <outlet property="locationLabel" destination="MNP-wm-EBE" id="0e4-uY-evF"/>
+                        <outlet property="weatherLabel" destination="0wB-NC-59r" id="R9g-lk-Ess"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Txh-wc-p3l" userLabel="First Responder" sceneMemberID="firstResponder"/>

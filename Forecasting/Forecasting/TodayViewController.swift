@@ -11,6 +11,7 @@ import UIKit
 
 class TodayViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
+    @IBOutlet var weatherLabel: UILabel!
     
     var locationService: LocationProtocol?
     var weatherService: WeatherProtocol?
@@ -39,6 +40,7 @@ class TodayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locationLabel.text = "Location not loaded"
+        self.weatherLabel.text = "Not available"
         
         _ = locationService?.locationFeed.flatMap({
             self.getCurrentWeather(latitude: $0.latitude, longitude: $0.longitude)
@@ -46,6 +48,7 @@ class TodayViewController: UIViewController {
         .subscribe(
             onNext: { currentWeather in
                 self.locationLabel.text = currentWeather.locationName
+                self.weatherLabel.text = currentWeather.description
         },
             onError: { _ in
                 self.presentError(
