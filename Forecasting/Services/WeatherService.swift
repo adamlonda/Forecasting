@@ -22,15 +22,21 @@ class WeatherService: WeatherProtocol {
     private func parseCurrentWeather(from response: [String: Any]) throws -> CurrentWeather {
         guard
             let locationName = response["name"] as! String?,
-            let weatherInfo = response["weather"] as! [[String: Any]]? else {
+            let weatherInfo = response["weather"] as! [[String: Any]]?,
+            let mainInfo = response["main"] as! [String: Any]? else {
             throw NetworkingError.apiError
         }
         
-        guard let weatherDescription = weatherInfo[0]["main"] as! String? else {
+        guard
+            let weatherDescription = weatherInfo[0]["main"] as! String?,
+            let tempKelvin = mainInfo["temp"] as! NSNumber? else {
             throw NetworkingError.apiError
         }
         
-        return CurrentWeather(locationName: locationName, description: weatherDescription)
+        return CurrentWeather(
+            locationName: locationName,
+            description: weatherDescription,
+            temperatureKelvin: tempKelvin.floatValue)
     }
     
     func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {
