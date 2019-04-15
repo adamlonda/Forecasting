@@ -8,8 +8,10 @@
 
 struct CurrentWeather {
     let locationName: String
+    let description: String
     
-    init(locationName: String) {
+    init(locationName: String, description: String) {
         self.locationName = locationName
+        self.description = description
     }
 }

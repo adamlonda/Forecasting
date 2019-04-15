@@ -20,11 +20,17 @@ class WeatherService: WeatherProtocol {
     private let apiKey = "4b41e86332361042c6ee97624f64b591"
     
     private func parseCurrentWeather(from response: [String: Any]) throws -> CurrentWeather {
-        guard let locationName = response["name"] as! String? else {
+        guard
+            let locationName = response["name"] as! String?,
+            let weatherInfo = response["weather"] as! [[String: Any]]? else {
             throw NetworkingError.apiError
         }
         
-        return CurrentWeather(locationName: locationName)
+        guard let weatherDescription = weatherInfo[0]["main"] as! String? else {
+            throw NetworkingError.apiError
+        }
+        
+        return CurrentWeather(locationName: locationName, description: weatherDescription)
     }
     
     func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {
