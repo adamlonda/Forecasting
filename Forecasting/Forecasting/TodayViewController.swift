@@ -48,7 +48,7 @@ class TodayViewController: UIViewController {
         .subscribe(
             onNext: { currentWeather in
                 self.locationLabel.text = currentWeather.locationName
-                self.weatherLabel.text = currentWeather.description
+                self.weatherLabel.text = "\(Int(round(currentWeather.temperatureKelvin - 273.15)))°C | \(currentWeather.description)"
         },
             onError: { _ in
                 self.presentError(
