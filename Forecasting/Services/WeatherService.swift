@@ -28,6 +28,7 @@ class WeatherService: WeatherProtocol {
         }
         
         guard
+            let weatherIcon = weatherInfo[0]["icon"] as! String?,
             let weatherDescription = weatherInfo[0]["main"] as! String?,
             let tempKelvin = mainInfo["temp"] as! NSNumber? else {
             throw NetworkingError.apiError
@@ -35,6 +36,7 @@ class WeatherService: WeatherProtocol {
         
         return CurrentWeather(
             locationName: locationName,
+            icon: weatherIcon,
             description: weatherDescription,
             temperatureKelvin: tempKelvin.floatValue)
     }

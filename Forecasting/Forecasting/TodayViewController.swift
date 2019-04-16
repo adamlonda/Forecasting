@@ -40,7 +40,7 @@ class TodayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locationLabel.text = "Location not loaded"
-        self.weatherLabel.text = "Not available"
+        self.weatherLabel.text = "Weather not available"
         
         _ = locationService?.locationFeed.flatMap({
             self.getCurrentWeather(latitude: $0.latitude, longitude: $0.longitude)

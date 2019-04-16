@@ -8,11 +8,13 @@
 
 struct CurrentWeather {
     let locationName: String
+    let icon: String
     let description: String
     let temperatureKelvin: Float
     
-    init(locationName: String, description: String, temperatureKelvin: Float) {
+    init(locationName: String, icon: String, description: String, temperatureKelvin: Float) {
         self.locationName = locationName
+        self.icon = icon
         self.description = description
         self.temperatureKelvin = temperatureKelvin
     }
