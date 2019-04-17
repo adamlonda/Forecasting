@@ -35,12 +35,15 @@ class WeatherService: WeatherProtocol {
             throw NetworkingError.apiError
         }
         
+        let rainInfo = response["rain"] as! [String : Any]?
+        
         return CurrentWeather(
             locationName: locationName,
             icon: weatherIcon,
             description: weatherDescription,
             temperatureKelvin: tempKelvin.floatValue,
-            humidity: humidity)
+            humidity: humidity,
+            rainVolume: rainInfo?["3h"] as! Int?)
     }
     
     func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {
