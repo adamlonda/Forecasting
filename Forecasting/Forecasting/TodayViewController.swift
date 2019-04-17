@@ -48,9 +48,13 @@ class TodayViewController: UIViewController {
         })
         .subscribe(
             onNext: { currentWeather in
+                guard let weatherImage = UIImage(named: currentWeather.icon) else {
+                    fatalError("Weather code API error")
+                }
+                
                 self.locationLabel.text = currentWeather.locationName
                 self.weatherLabel.text = "\(Int(round(currentWeather.temperatureKelvin - 273.15)))°C | \(currentWeather.description)"
-                self.weatherImageView.image = UIImage(named: currentWeather.icon)
+                self.weatherImageView.image = weatherImage
         },
             onError: { _ in
                 self.presentError(
