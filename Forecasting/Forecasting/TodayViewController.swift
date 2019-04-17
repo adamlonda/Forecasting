@@ -12,6 +12,7 @@ import UIKit
 class TodayViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var weatherLabel: UILabel!
+    @IBOutlet var weatherImageView: UIImageView!
     
     var locationService: LocationProtocol?
     var weatherService: WeatherProtocol?
@@ -49,6 +50,7 @@ class TodayViewController: UIViewController {
             onNext: { currentWeather in
                 self.locationLabel.text = currentWeather.locationName
                 self.weatherLabel.text = "\(Int(round(currentWeather.temperatureKelvin - 273.15)))°C | \(currentWeather.description)"
+                self.weatherImageView.image = UIImage(named: currentWeather.icon)
         },
             onError: { _ in
                 self.presentError(

@@ -51,11 +51,20 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Pp-7v-PBw" userLabel="Weather Image View">
+                                <rect key="frame" x="157" y="317" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Ka1-0x-nvY"/>
+                                    <constraint firstAttribute="height" constant="100" id="lbZ-S8-f9L"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="0Pp-7v-PBw" firstAttribute="centerX" secondItem="0cu-AJ-0Vo" secondAttribute="centerX" id="2tZ-d5-ls9"/>
                             <constraint firstItem="1C8-Qu-MX6" firstAttribute="leading" secondItem="0cu-AJ-0Vo" secondAttribute="leading" constant="20" id="9zU-bF-PW1"/>
                             <constraint firstItem="1C8-Qu-MX6" firstAttribute="centerY" secondItem="0cu-AJ-0Vo" secondAttribute="centerY" id="QDF-YM-yKP"/>
+                            <constraint firstItem="1C8-Qu-MX6" firstAttribute="top" secondItem="0Pp-7v-PBw" secondAttribute="bottom" constant="8" id="TNV-HA-qon"/>
                             <constraint firstItem="0cu-AJ-0Vo" firstAttribute="trailing" secondItem="1C8-Qu-MX6" secondAttribute="trailing" constant="20" id="sVa-mR-Nzx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0cu-AJ-0Vo"/>
@@ -63,6 +72,7 @@
                     <tabBarItem key="tabBarItem" title="Today" image="TodayIcon" id="93R-A9-zPO" userLabel="Today"/>
                     <connections>
                         <outlet property="locationLabel" destination="MNP-wm-EBE" id="0e4-uY-evF"/>
+                        <outlet property="weatherImageView" destination="0Pp-7v-PBw" id="nZ0-Qg-3ra"/>
                         <outlet property="weatherLabel" destination="0wB-NC-59r" id="R9g-lk-Ess"/>
                     </connections>
                 </viewController>
