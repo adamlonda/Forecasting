@@ -23,7 +23,8 @@ class WeatherService: WeatherProtocol {
         guard
             let locationName = response["name"] as! String?,
             let weatherInfo = response["weather"] as! [[String: Any]]?,
-            let mainInfo = response["main"] as! [String: Any]? else {
+            let mainInfo = response["main"] as! [String: Any]?,
+            let windInfo = response["wind"] as! [String: Any]? else {
             throw NetworkingError.apiError
         }
         
@@ -32,7 +33,9 @@ class WeatherService: WeatherProtocol {
             let weatherDescription = weatherInfo[0]["main"] as! String?,
             let tempKelvin = mainInfo["temp"] as! NSNumber?,
             let humidity = mainInfo["humidity"] as! Int?,
-            let pressure = mainInfo["pressure"] as! Int? else {
+            let pressure = mainInfo["pressure"] as! Int?,
+            let windSpeed = windInfo["speed"] as! NSNumber?,
+            let windDegrees = windInfo["deg"] as! NSNumber? else {
             throw NetworkingError.apiError
         }
         
@@ -45,7 +48,9 @@ class WeatherService: WeatherProtocol {
             temperatureKelvin: tempKelvin.floatValue,
             humidity: humidity,
             rainVolume: rainInfo?["3h"] as! Int?,
-            pressure: pressure)
+            pressure: pressure,
+            windSpeed: windSpeed.floatValue,
+            windDegrees: windDegrees.intValue)
     }
     
     func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {

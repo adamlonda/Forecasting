@@ -14,8 +14,10 @@ struct CurrentWeather {
     let humidity: Int
     let rainVolume: Int?
     let pressure: Int
+    let windSpeed: Float
+    let windDegrees: Int
     
-    init(locationName: String, icon: String, description: String, temperatureKelvin: Float, humidity: Int, rainVolume: Int?, pressure: Int) {
+    init(locationName: String, icon: String, description: String, temperatureKelvin: Float, humidity: Int, rainVolume: Int?, pressure: Int, windSpeed: Float, windDegrees: Int) {
         self.locationName = locationName
         self.icon = icon
         self.description = description
@@ -23,5 +25,7 @@ struct CurrentWeather {
         self.humidity = humidity
         self.rainVolume = rainVolume
         self.pressure = pressure
+        self.windSpeed = windSpeed
+        self.windDegrees = windDegrees
     }
 }
