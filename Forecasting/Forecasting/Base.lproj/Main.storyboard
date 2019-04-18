@@ -58,6 +58,21 @@
                                     <constraint firstAttribute="height" constant="100" id="lbZ-S8-f9L"/>
                                 </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vre-an-dky" userLabel="Weather Details Stack View">
+                                <rect key="frame" x="20" y="487" width="330" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6wN-Ui-p4h" userLabel="Humidity Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="110" height="200"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eeg-RN-Dg4" userLabel="Precipitation Stack View">
+                                        <rect key="frame" x="110" y="0.0" width="110" height="200"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8xY-ZK-8Cd" userLabel="Pressure Stack View">
+                                        <rect key="frame" x="220" y="0.0" width="110" height="200"/>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
