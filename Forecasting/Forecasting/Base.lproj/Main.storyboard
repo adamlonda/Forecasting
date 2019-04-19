@@ -59,17 +59,43 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vre-an-dky" userLabel="Weather Details Stack View">
-                                <rect key="frame" x="20" y="487" width="330" height="200"/>
+                                <rect key="frame" x="20" y="487" width="270" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6wN-Ui-p4h" userLabel="Humidity Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="110" height="200"/>
-                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpB-hk-v4Q" userLabel="Humidity View">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="47"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Humidity" translatesAutoresizingMaskIntoConstraints="NO" id="ApV-xZ-6J0" userLabel="Humidity Icon">
+                                                <rect key="frame" x="10" y="0.0" width="30" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="30" id="3ss-kS-397"/>
+                                                    <constraint firstAttribute="height" constant="30" id="d9w-vN-UAG"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmv-sM-TCB" userLabel="Humidity Label">
+                                                <rect key="frame" x="7.5" y="30" width="35.5" height="17"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="17" id="Er5-4H-6xw"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="ApV-xZ-6J0" firstAttribute="top" secondItem="gpB-hk-v4Q" secondAttribute="top" id="RGc-cZ-WsJ"/>
+                                            <constraint firstItem="ApV-xZ-6J0" firstAttribute="centerX" secondItem="gpB-hk-v4Q" secondAttribute="centerX" id="j9q-fN-c4W"/>
+                                            <constraint firstItem="Gmv-sM-TCB" firstAttribute="top" secondItem="ApV-xZ-6J0" secondAttribute="bottom" id="ntA-6o-TT5"/>
+                                            <constraint firstAttribute="bottom" secondItem="Gmv-sM-TCB" secondAttribute="bottom" id="uDO-Eg-mnk"/>
+                                            <constraint firstItem="Gmv-sM-TCB" firstAttribute="centerX" secondItem="gpB-hk-v4Q" secondAttribute="centerX" id="wnc-NP-TjR"/>
+                                        </constraints>
+                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eeg-RN-Dg4" userLabel="Precipitation Stack View">
-                                        <rect key="frame" x="110" y="0.0" width="110" height="200"/>
+                                        <rect key="frame" x="50" y="0.0" width="110" height="47"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8xY-ZK-8Cd" userLabel="Pressure Stack View">
-                                        <rect key="frame" x="220" y="0.0" width="110" height="200"/>
+                                        <rect key="frame" x="160" y="0.0" width="110" height="47"/>
                                     </stackView>
                                 </subviews>
                             </stackView>
@@ -133,6 +159,7 @@
     </scenes>
     <resources>
         <image name="ForecastIcon" width="22.5" height="22.5"/>
+        <image name="Humidity" width="30" height="30"/>
         <image name="TodayIcon" width="24.5" height="24"/>
     </resources>
 </document>
