@@ -39,7 +39,7 @@ class WeatherService: WeatherProtocol {
             throw NetworkingError.apiError
         }
         
-        let rainInfo = response["rain"] as! [String : Any]?
+        let precipitation = response["rain"] as! [String : Any]?
         
         return CurrentWeather(
             locationName: locationName,
@@ -47,7 +47,7 @@ class WeatherService: WeatherProtocol {
             description: weatherDescription,
             temperatureKelvin: tempKelvin.floatValue,
             humidity: humidity,
-            rainVolume: rainInfo?["3h"] as! Int?,
+            precipitation: precipitation?["3h"] as! Int?,
             pressure: pressure,
             windSpeed: windSpeed.floatValue,
             windDegrees: windDegrees.intValue)
