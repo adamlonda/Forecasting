@@ -34,7 +34,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1C8-Qu-MX6">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1C8-Qu-MX6" userLabel="Weather Info Stack View">
                                 <rect key="frame" x="20" y="425" width="374" height="51.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNP-wm-EBE" userLabel="Location Label">
@@ -58,22 +58,21 @@
                                     <constraint firstAttribute="height" constant="100" id="lbZ-S8-f9L"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vre-an-dky" userLabel="Weather Details Stack View">
-                                <rect key="frame" x="20" y="487" width="270" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="Vre-an-dky" userLabel="Weather Details Stack View">
+                                <rect key="frame" x="60.5" y="489.5" width="293" height="47"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpB-hk-v4Q" userLabel="Humidity View">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="47"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="89" height="47"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Humidity" translatesAutoresizingMaskIntoConstraints="NO" id="ApV-xZ-6J0" userLabel="Humidity Icon">
-                                                <rect key="frame" x="10" y="0.0" width="30" height="30"/>
+                                                <rect key="frame" x="29.5" y="0.0" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="30" id="3ss-kS-397"/>
                                                     <constraint firstAttribute="height" constant="30" id="d9w-vN-UAG"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmv-sM-TCB" userLabel="Humidity Label">
-                                                <rect key="frame" x="7.5" y="30" width="35.5" height="17"/>
+                                                <rect key="frame" x="0.0" y="30" width="89" height="17"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="Er5-4H-6xw"/>
                                                 </constraints>
@@ -86,24 +85,81 @@
                                         <constraints>
                                             <constraint firstItem="ApV-xZ-6J0" firstAttribute="top" secondItem="gpB-hk-v4Q" secondAttribute="top" id="RGc-cZ-WsJ"/>
                                             <constraint firstItem="ApV-xZ-6J0" firstAttribute="centerX" secondItem="gpB-hk-v4Q" secondAttribute="centerX" id="j9q-fN-c4W"/>
+                                            <constraint firstItem="Gmv-sM-TCB" firstAttribute="leading" secondItem="gpB-hk-v4Q" secondAttribute="leading" id="jJx-3X-YSh"/>
+                                            <constraint firstAttribute="trailing" secondItem="Gmv-sM-TCB" secondAttribute="trailing" id="lb1-OS-lpw"/>
+                                            <constraint firstAttribute="width" constant="89" id="mkN-Pn-3qb"/>
                                             <constraint firstItem="Gmv-sM-TCB" firstAttribute="top" secondItem="ApV-xZ-6J0" secondAttribute="bottom" id="ntA-6o-TT5"/>
                                             <constraint firstAttribute="bottom" secondItem="Gmv-sM-TCB" secondAttribute="bottom" id="uDO-Eg-mnk"/>
-                                            <constraint firstItem="Gmv-sM-TCB" firstAttribute="centerX" secondItem="gpB-hk-v4Q" secondAttribute="centerX" id="wnc-NP-TjR"/>
                                         </constraints>
                                     </view>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eeg-RN-Dg4" userLabel="Precipitation Stack View">
-                                        <rect key="frame" x="50" y="0.0" width="110" height="47"/>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8xY-ZK-8Cd" userLabel="Pressure Stack View">
-                                        <rect key="frame" x="160" y="0.0" width="110" height="47"/>
-                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SIe-tW-rhH" userLabel="Precipitation View">
+                                        <rect key="frame" x="102" y="0.0" width="89" height="47"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Precipitation" translatesAutoresizingMaskIntoConstraints="NO" id="iov-GK-nI3" userLabel="Precipitation Icon">
+                                                <rect key="frame" x="29.5" y="0.0" width="30" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="30" id="rkY-SM-N1o"/>
+                                                    <constraint firstAttribute="height" constant="30" id="ztG-N0-xNE"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0 mm" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6dl-aL-P5q" userLabel="Precipitation Label">
+                                                <rect key="frame" x="0.0" y="30" width="89" height="17"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="17" id="S4Q-d7-pB9"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="6dl-aL-P5q" firstAttribute="top" secondItem="iov-GK-nI3" secondAttribute="bottom" id="69A-mk-sdY"/>
+                                            <constraint firstAttribute="width" constant="89" id="Gq8-ko-LYx"/>
+                                            <constraint firstItem="iov-GK-nI3" firstAttribute="centerX" secondItem="SIe-tW-rhH" secondAttribute="centerX" id="LpP-O6-pvr"/>
+                                            <constraint firstAttribute="trailing" secondItem="6dl-aL-P5q" secondAttribute="trailing" id="Mog-Nq-tcz"/>
+                                            <constraint firstItem="iov-GK-nI3" firstAttribute="top" secondItem="SIe-tW-rhH" secondAttribute="top" id="cEA-f9-1PX"/>
+                                            <constraint firstItem="6dl-aL-P5q" firstAttribute="leading" secondItem="SIe-tW-rhH" secondAttribute="leading" id="tMU-f3-67q"/>
+                                            <constraint firstAttribute="bottom" secondItem="6dl-aL-P5q" secondAttribute="bottom" id="zad-rV-0w2"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Xi-PN-ZvY" userLabel="Pressure View">
+                                        <rect key="frame" x="204" y="0.0" width="89" height="47"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pressure" translatesAutoresizingMaskIntoConstraints="NO" id="5vb-Qx-VL7" userLabel="Pressure Icon">
+                                                <rect key="frame" x="29.5" y="0.0" width="30" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="AOK-2k-xxf"/>
+                                                    <constraint firstAttribute="width" constant="30" id="cWh-rF-UHU"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1019 hPa" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUO-h6-Bsx" userLabel="Pressure Label">
+                                                <rect key="frame" x="0.0" y="30" width="89" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="5vb-Qx-VL7" firstAttribute="top" secondItem="8Xi-PN-ZvY" secondAttribute="top" id="6Zw-9v-bTK"/>
+                                            <constraint firstItem="5vb-Qx-VL7" firstAttribute="centerX" secondItem="8Xi-PN-ZvY" secondAttribute="centerX" id="7X1-WF-Wf5"/>
+                                            <constraint firstAttribute="bottom" secondItem="zUO-h6-Bsx" secondAttribute="bottom" id="LK4-lS-oVz"/>
+                                            <constraint firstItem="zUO-h6-Bsx" firstAttribute="top" secondItem="5vb-Qx-VL7" secondAttribute="bottom" id="UL5-35-vNf"/>
+                                            <constraint firstItem="zUO-h6-Bsx" firstAttribute="leading" secondItem="8Xi-PN-ZvY" secondAttribute="leading" id="Zcx-Yk-jiM"/>
+                                            <constraint firstAttribute="trailing" secondItem="zUO-h6-Bsx" secondAttribute="trailing" id="dXM-BP-1lt"/>
+                                            <constraint firstAttribute="width" constant="89" id="pxx-f1-x21"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="0Pp-7v-PBw" firstAttribute="centerX" secondItem="0cu-AJ-0Vo" secondAttribute="centerX" id="2tZ-d5-ls9"/>
+                            <constraint firstItem="Vre-an-dky" firstAttribute="centerX" secondItem="0cu-AJ-0Vo" secondAttribute="centerX" id="4Tc-Qz-9dD"/>
                             <constraint firstItem="1C8-Qu-MX6" firstAttribute="leading" secondItem="0cu-AJ-0Vo" secondAttribute="leading" constant="20" id="9zU-bF-PW1"/>
+                            <constraint firstItem="Vre-an-dky" firstAttribute="top" secondItem="1C8-Qu-MX6" secondAttribute="bottom" constant="13" id="FFU-Hy-yRy"/>
                             <constraint firstItem="1C8-Qu-MX6" firstAttribute="centerY" secondItem="0cu-AJ-0Vo" secondAttribute="centerY" id="QDF-YM-yKP"/>
                             <constraint firstItem="1C8-Qu-MX6" firstAttribute="top" secondItem="0Pp-7v-PBw" secondAttribute="bottom" constant="8" id="TNV-HA-qon"/>
                             <constraint firstItem="0cu-AJ-0Vo" firstAttribute="trailing" secondItem="1C8-Qu-MX6" secondAttribute="trailing" constant="20" id="sVa-mR-Nzx"/>
@@ -112,7 +168,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Today" image="TodayIcon" id="93R-A9-zPO" userLabel="Today"/>
                     <connections>
+                        <outlet property="humidityLabel" destination="Gmv-sM-TCB" id="Auc-yT-DGu"/>
                         <outlet property="locationLabel" destination="MNP-wm-EBE" id="0e4-uY-evF"/>
+                        <outlet property="precipitationLabel" destination="6dl-aL-P5q" id="BJr-K8-M2o"/>
+                        <outlet property="pressureLabel" destination="zUO-h6-Bsx" id="skb-CR-Ywd"/>
                         <outlet property="weatherImageView" destination="0Pp-7v-PBw" id="nZ0-Qg-3ra"/>
                         <outlet property="weatherLabel" destination="0wB-NC-59r" id="R9g-lk-Ess"/>
                     </connections>
@@ -160,6 +219,8 @@
     <resources>
         <image name="ForecastIcon" width="22.5" height="22.5"/>
         <image name="Humidity" width="30" height="30"/>
+        <image name="Precipitation" width="30" height="30"/>
+        <image name="Pressure" width="30" height="30"/>
         <image name="TodayIcon" width="24.5" height="24"/>
     </resources>
 </document>
