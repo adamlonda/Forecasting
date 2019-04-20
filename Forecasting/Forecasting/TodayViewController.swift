@@ -44,33 +44,41 @@ class TodayViewController: UIViewController {
             longitude: longitude)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func setDefaultDisplay() {
         self.locationLabel.text = "Location not loaded"
         self.weatherLabel.text = "Weather not available"
         
         self.humidityLabel.text = notAvailableLabel
         self.precipitationLabel.text = notAvailableLabel
         self.pressureLabel.text = notAvailableLabel
+    }
+    
+    private func display(_ currentWeather: CurrentWeather) {
+        guard let weatherImage = UIImage(named: currentWeather.icon) else {
+            fatalError("Weather code API error")
+        }
+        
+        self.locationLabel.text = currentWeather.locationName
+        self.weatherLabel.text = "\(Int(round(currentWeather.temperatureKelvin - 273.15)))°C | \(currentWeather.description)"
+        self.weatherImageView.image = weatherImage
+        
+        self.humidityLabel.text = "\(currentWeather.humidity)%"
+        self.precipitationLabel.text = currentWeather.precipitation != nil
+            ? "\(currentWeather.precipitation!) mm"
+            : self.notAvailableLabel
+        self.pressureLabel.text = "\(currentWeather.pressure) hPa"
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setDefaultDisplay()
         
         _ = locationService?.locationFeed.flatMap({
             self.getCurrentWeather(latitude: $0.latitude, longitude: $0.longitude)
         })
         .subscribe(
             onNext: { currentWeather in
-                guard let weatherImage = UIImage(named: currentWeather.icon) else {
-                    fatalError("Weather code API error")
-                }
-                
-                self.locationLabel.text = currentWeather.locationName
-                self.weatherLabel.text = "\(Int(round(currentWeather.temperatureKelvin - 273.15)))°C | \(currentWeather.description)"
-                self.weatherImageView.image = weatherImage
-                
-                self.humidityLabel.text = "\(currentWeather.humidity)%"
-                self.precipitationLabel.text = currentWeather.precipitation != nil
-                    ? "\(currentWeather.precipitation!) mm"
-                    : self.notAvailableLabel
-                self.pressureLabel.text = "\(currentWeather.pressure) hPa"
+                self.display(currentWeather)
         },
             onError: { _ in
                 self.presentError(
