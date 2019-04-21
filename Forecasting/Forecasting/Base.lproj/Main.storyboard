@@ -243,6 +243,8 @@
                         <outlet property="pressureLabel" destination="zUO-h6-Bsx" id="skb-CR-Ywd"/>
                         <outlet property="weatherImageView" destination="0Pp-7v-PBw" id="nZ0-Qg-3ra"/>
                         <outlet property="weatherLabel" destination="0wB-NC-59r" id="R9g-lk-Ess"/>
+                        <outlet property="windDirectionLabel" destination="wTp-FC-XVE" id="svG-Zc-Mrr"/>
+                        <outlet property="windSpeedLabel" destination="rps-dg-ywp" id="eFg-gL-Vcb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Txh-wc-p3l" userLabel="First Responder" sceneMemberID="firstResponder"/>

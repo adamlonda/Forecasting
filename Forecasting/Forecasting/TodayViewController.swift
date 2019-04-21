@@ -18,6 +18,9 @@ class TodayViewController: UIViewController {
     @IBOutlet var precipitationLabel: UILabel!
     @IBOutlet var pressureLabel: UILabel!
     
+    @IBOutlet var windSpeedLabel: UILabel!
+    @IBOutlet var windDirectionLabel: UILabel!
+    
     private let notAvailableLabel = "N/A"
     
     var locationService: LocationProtocol?
@@ -51,6 +54,9 @@ class TodayViewController: UIViewController {
         self.humidityLabel.text = notAvailableLabel
         self.precipitationLabel.text = notAvailableLabel
         self.pressureLabel.text = notAvailableLabel
+        
+        self.windSpeedLabel.text = notAvailableLabel
+        self.windDirectionLabel.text = notAvailableLabel
     }
     
     private func display(_ currentWeather: CurrentWeather) {
@@ -67,6 +73,8 @@ class TodayViewController: UIViewController {
             ? "\(currentWeather.precipitation!) mm"
             : self.notAvailableLabel
         self.pressureLabel.text = "\(currentWeather.pressure) hPa"
+        
+        self.windSpeedLabel.text = "\(Int(round(currentWeather.windSpeed * 3.6))) km/h"
     }
     
     override func viewDidLoad() {
