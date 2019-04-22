@@ -75,6 +75,7 @@ class TodayViewController: UIViewController {
         self.pressureLabel.text = "\(currentWeather.pressure) hPa"
         
         self.windSpeedLabel.text = "\(Int(round(currentWeather.windSpeed * 3.6))) km/h"
+        self.windDirectionLabel.text = "\((currentWeather.windDegrees % 360).getWindDirection())".uppercased()
     }
     
     override func viewDidLoad() {
@@ -99,5 +100,75 @@ class TodayViewController: UIViewController {
                 title: "Geolocation Error",
                 message: "An error occured while getting your location. Please enable geolocation in your device settings for the Forecasting app, and try again.")
         })
+    }
+}
+
+// MARK: Degrees -> Enum type
+extension Int {
+    enum WindDirection {
+        case n, nne, ne, ene
+        case e, ese, se, sse
+        case s, ssw, sw, wsw
+        case w, wnw, nw, nnw
+    }
+    
+    func getWindDirection() -> WindDirection {
+        // MARK: North
+        if 348 < self || self <= 11 {
+            return WindDirection.n
+        }
+        if 11 < self && self <= 33 {
+            return WindDirection.nne
+        }
+        if 33 < self && self <= 56 {
+            return WindDirection.ne
+        }
+        if 56 < self && self <= 78 {
+            return WindDirection.ene
+        }
+        
+        // MARK: East
+        if 78 < self && self <= 101 {
+            return WindDirection.e
+        }
+        if 101 < self && self <= 123 {
+            return WindDirection.ese
+        }
+        if 123 < self && self <= 146 {
+            return WindDirection.se
+        }
+        if 146 < self && self <= 168 {
+            return WindDirection.sse
+        }
+        
+        // MARK: South
+        if 168 < self && self <= 191 {
+            return WindDirection.s
+        }
+        if 191 < self && self <= 213 {
+            return WindDirection.ssw
+        }
+        if 213 < self && self <= 236 {
+            return WindDirection.sw
+        }
+        if 236 < self && self <= 258 {
+            return WindDirection.wsw
+        }
+        
+        // MARK: West
+        if 258 < self && self <= 281 {
+            return WindDirection.w
+        }
+        if 281 < self && self <= 303 {
+            return WindDirection.wnw
+        }
+        if 303 < self && self <= 326 {
+            return WindDirection.nw
+        }
+        if 326 < self && self <= 348 {
+            return WindDirection.nnw
+        }
+        
+        fatalError("Should not happen")
     }
 }
