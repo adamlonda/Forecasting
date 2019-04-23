@@ -75,7 +75,7 @@ class TodayViewController: UIViewController {
         self.pressureLabel.text = "\(currentWeather.pressure) hPa"
         
         self.windSpeedLabel.text = "\(Int(round(currentWeather.windSpeed * 3.6))) km/h"
-        self.windDirectionLabel.text = "\((currentWeather.windDegrees % 360).getWindDirection())".uppercased()
+        self.windDirectionLabel.text = "\(currentWeather.windDegrees.getWindDirection())".uppercased()
     }
     
     override func viewDidLoad() {
@@ -113,59 +113,61 @@ extension Int {
     }
     
     func getWindDirection() -> WindDirection {
+        let degrees = self % 360
+        
         // MARK: North
-        if 348 < self || self <= 11 {
+        if 348 < degrees || degrees <= 11 {
             return WindDirection.n
         }
-        if 11 < self && self <= 33 {
+        if 11 < degrees && degrees <= 33 {
             return WindDirection.nne
         }
-        if 33 < self && self <= 56 {
+        if 33 < degrees && degrees <= 56 {
             return WindDirection.ne
         }
-        if 56 < self && self <= 78 {
+        if 56 < degrees && degrees <= 78 {
             return WindDirection.ene
         }
         
         // MARK: East
-        if 78 < self && self <= 101 {
+        if 78 < degrees && degrees <= 101 {
             return WindDirection.e
         }
-        if 101 < self && self <= 123 {
+        if 101 < degrees && degrees <= 123 {
             return WindDirection.ese
         }
-        if 123 < self && self <= 146 {
+        if 123 < degrees && degrees <= 146 {
             return WindDirection.se
         }
-        if 146 < self && self <= 168 {
+        if 146 < degrees && degrees <= 168 {
             return WindDirection.sse
         }
         
         // MARK: South
-        if 168 < self && self <= 191 {
+        if 168 < degrees && degrees <= 191 {
             return WindDirection.s
         }
-        if 191 < self && self <= 213 {
+        if 191 < degrees && degrees <= 213 {
             return WindDirection.ssw
         }
-        if 213 < self && self <= 236 {
+        if 213 < degrees && degrees <= 236 {
             return WindDirection.sw
         }
-        if 236 < self && self <= 258 {
+        if 236 < degrees && degrees <= 258 {
             return WindDirection.wsw
         }
         
         // MARK: West
-        if 258 < self && self <= 281 {
+        if 258 < degrees && degrees <= 281 {
             return WindDirection.w
         }
-        if 281 < self && self <= 303 {
+        if 281 < degrees && degrees <= 303 {
             return WindDirection.wnw
         }
-        if 303 < self && self <= 326 {
+        if 303 < degrees && degrees <= 326 {
             return WindDirection.nw
         }
-        if 326 < self && self <= 348 {
+        if 326 < degrees && degrees <= 348 {
             return WindDirection.nnw
         }
         
