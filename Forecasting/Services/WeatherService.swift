@@ -33,7 +33,7 @@ class WeatherService: WeatherProtocol {
             let weatherDescription = weatherInfo[0]["main"] as! String?,
             let tempKelvin = mainInfo["temp"] as! NSNumber?,
             let humidity = mainInfo["humidity"] as! Int?,
-            let pressure = mainInfo["pressure"] as! Int?,
+            let pressure = mainInfo["pressure"] as! NSNumber?,
             let windSpeed = windInfo["speed"] as! NSNumber?,
             let windDegrees = windInfo["deg"] as! NSNumber? else {
             throw NetworkingError.apiError
@@ -48,7 +48,7 @@ class WeatherService: WeatherProtocol {
             temperatureKelvin: tempKelvin.floatValue,
             humidity: humidity,
             precipitation: precipitation?["3h"] as! Int?,
-            pressure: pressure,
+            pressure: pressure.intValue,
             windSpeed: windSpeed.floatValue,
             windDegrees: windDegrees.intValue)
     }
