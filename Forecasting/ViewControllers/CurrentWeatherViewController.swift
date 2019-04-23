@@ -1,5 +1,5 @@
 //
-//  TodayViewController.swift
+//  CurrentWeatherViewController.swift
 //  Forecasting
 //
 //  Created by Adam Londa on 05/04/2019.
@@ -9,7 +9,7 @@
 import RxSwift
 import UIKit
 
-class TodayViewController: UIViewController {
+class CurrentWeatherViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var weatherLabel: UILabel!
     @IBOutlet var weatherImageView: UIImageView!
@@ -24,7 +24,7 @@ class TodayViewController: UIViewController {
     private let notAvailableLabel = "N/A"
     
     var locationService: LocationProtocol?
-    var weatherService: WeatherProtocol?
+    var weatherService: CurrentWeatherProtocol?
     
     private func presentError(title: String, message: String) {
         let alert = UIAlertController(

@@ -16,13 +16,21 @@ extension SwinjectStoryboard {
             LocationService()
         }
         
-        swinject.register(WeatherProtocol.self) { _ in
-            WeatherService()
+        swinject.register(CurrentWeatherProtocol.self) { _ in
+            CurrentWeatherService()
         }
         
-        swinject.storyboardInitCompleted(TodayViewController.self) { r, c in
+        swinject.register(WeatherForecastProtocol.self) { _ in
+            WeatherForecastService()
+        }
+        
+        swinject.storyboardInitCompleted(CurrentWeatherViewController.self) { r, c in
             c.locationService = r.resolve(LocationProtocol.self)
-            c.weatherService = r.resolve(WeatherProtocol.self)
+            c.weatherService = r.resolve(CurrentWeatherProtocol.self)
+        }
+        
+        swinject.storyboardInitCompleted(WeatherForecastViewController.self) { r, c in
+            c.weatherService = r.resolve(WeatherForecastProtocol.self)
         }
     }
 }

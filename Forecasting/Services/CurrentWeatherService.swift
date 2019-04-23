@@ -1,5 +1,5 @@
 //
-//  WeatherService.swift
+//  CurrentWeatherService.swift
 //  Forecasting
 //
 //  Created by Adam Londa on 12/04/2019.
@@ -16,7 +16,7 @@ enum NetworkingError: Error {
     case apiError
 }
 
-class WeatherService: WeatherProtocol {
+class CurrentWeatherService: CurrentWeatherProtocol {
     private let apiKey = "4b41e86332361042c6ee97624f64b591"
     
     private func parseCurrentWeather(from response: [String: Any]) throws -> CurrentWeather {

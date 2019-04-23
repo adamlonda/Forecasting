@@ -13,7 +13,7 @@
         <!--Forecast Tab-->
         <scene sceneID="J0i-Ak-3jf">
             <objects>
-                <viewController id="eiS-QX-uYd" userLabel="Forecast Tab" sceneMemberID="viewController">
+                <viewController id="eiS-QX-uYd" userLabel="Forecast Tab" customClass="WeatherForecastViewController" customModule="Forecasting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bbF-bv-eho">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -29,7 +29,7 @@
         <!--Today Tab-->
         <scene sceneID="e0t-cg-THG">
             <objects>
-                <viewController id="o0B-Iy-G1f" userLabel="Today Tab" customClass="TodayViewController" customModule="Forecasting" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="o0B-Iy-G1f" userLabel="Today Tab" customClass="CurrentWeatherViewController" customModule="Forecasting" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b9T-MP-rgU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
