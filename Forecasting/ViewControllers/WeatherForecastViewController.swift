@@ -13,6 +13,12 @@ class WeatherForecastViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        _ = weatherService?.getWeatherForecast(latitude: 0, longitude: 0)
+        _ = weatherService?.getWeatherForecast(latitude: 0, longitude: 0).subscribe(
+            onNext: { forecast in
+                print("Got the forecast")
+        },
+            onError: { error in
+                print("Forecast error")
+        })
     }
 }
