@@ -13,7 +13,7 @@ class WeatherForecastViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        _ = weatherService?.getWeatherForecast(latitude: 0, longitude: 0).subscribe(
+        _ = weatherService?.getWeatherForecast(latitude: 37.785834, longitude: -122.406417).subscribe(
             onNext: { forecast in
                 print("Got the forecast")
         },

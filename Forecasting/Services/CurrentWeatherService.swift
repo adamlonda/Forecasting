@@ -10,6 +10,13 @@ import Alamofire
 import RxSwift
 
 class CurrentWeatherService: WeatherServiceBase, CurrentWeatherProtocol {
+    override func getResponseCode(from data: [String : Any]) throws -> Int {
+        guard let responseCode = data["cod"] as! Int? else {
+            throw NetworkingError.noResponseCode
+        }
+        return responseCode
+    }
+    
     private func parseCurrentWeather(from response: [String: Any]) throws -> CurrentWeather {
         guard
             let locationName = response["name"] as! String?,

@@ -19,6 +19,10 @@ class WeatherServiceBase {
     internal let apiKey = "4b41e86332361042c6ee97624f64b591"
     internal let baseUrl = "https://api.openweathermap.org/data/2.5"
     
+    internal func getResponseCode(from data: [String: Any]) throws -> Int {
+        fatalError("To be implemented in the specific service")
+    }
+    
     internal func check(_ response: DataResponse<Any>) throws -> [String: Any] {
         guard response.result.error == nil else {
             throw response.result.error!
@@ -27,12 +31,9 @@ class WeatherServiceBase {
         guard let data = response.result.value as! [String: Any]? else {
             throw NetworkingError.emptyResponse
         }
-
-        //FIXME: Different response code for each service
-        guard let responseCode = data["cod"] as! Int? else {
-            throw NetworkingError.noResponseCode
-        }
-
+        
+        let responseCode = try getResponseCode(from: data)
+        
         switch responseCode {
         case 200:
             return data
