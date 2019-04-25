@@ -30,6 +30,7 @@ extension SwinjectStoryboard {
         }
         
         swinject.storyboardInitCompleted(WeatherForecastViewController.self) { r, c in
+            c.locationService = r.resolve(LocationProtocol.self)
             c.weatherService = r.resolve(WeatherForecastProtocol.self)
         }
     }

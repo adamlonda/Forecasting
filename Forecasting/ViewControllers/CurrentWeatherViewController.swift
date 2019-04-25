@@ -9,7 +9,7 @@
 import RxSwift
 import UIKit
 
-class CurrentWeatherViewController: UIViewController {
+class CurrentWeatherViewController: ViewControllerBase {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var weatherLabel: UILabel!
     @IBOutlet var weatherImageView: UIImageView!
@@ -25,17 +25,6 @@ class CurrentWeatherViewController: UIViewController {
     
     var locationService: LocationProtocol?
     var weatherService: CurrentWeatherProtocol?
-    
-    private func presentError(title: String, message: String) {
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
     
     private func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {
         guard self.weatherService != nil else {
@@ -84,21 +73,16 @@ class CurrentWeatherViewController: UIViewController {
         
         _ = locationService?.locationFeed.flatMap({
             self.getCurrentWeather(latitude: $0.latitude, longitude: $0.longitude)
-        })
-        .subscribe(
+        }).subscribe(
             onNext: { currentWeather in
                 self.display(currentWeather)
         },
             onError: { _ in
-                self.presentError(
-                    title: "Network Error",
-                    message: "An error occured while getting current weather. Please check your internet connection and try again later.")
+                self.presentNetworkError()
         })
         
         _ = locationService?.errorFeed.subscribe(onNext: { _ in
-            self.presentError(
-                title: "Geolocation Error",
-                message: "An error occured while getting your location. Please enable geolocation in your device settings for the Forecasting app, and try again.")
+            self.presentGeolocationError()
         })
     }
 }

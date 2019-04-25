@@ -6,19 +6,36 @@
 //  Copyright © 2019 Adam Londa. All rights reserved.
 //
 
+import RxSwift
 import UIKit
 
-class WeatherForecastViewController: UIViewController {
+class WeatherForecastViewController: ViewControllerBase {
+    var locationService: LocationProtocol?
     var weatherService: WeatherForecastProtocol?
+    
+    private func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<WeatherForecast> {
+        guard self.weatherService != nil else {
+            fatalError("Should not happen.")
+        }
+        
+        return self.weatherService!.getWeatherForecast(latitude: latitude, longitude: longitude)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        _ = weatherService?.getWeatherForecast(latitude: 37.785834, longitude: -122.406417).subscribe(
+        
+        _ = locationService?.locationFeed.flatMap({
+            return self.getWeatherForecast(latitude: $0.latitude, longitude: $0.longitude)
+        }).subscribe(
             onNext: { forecast in
                 print("Got the forecast")
         },
             onError: { error in
-                print("Forecast error")
+                self.presentNetworkError()
+        })
+        
+        _ = locationService?.errorFeed.subscribe(onNext: { _ in
+            self.presentGeolocationError()
         })
     }
 }
