@@ -23,7 +23,31 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
     }
     
     private func parseWeatherForecast(from response: [String: Any]) throws -> WeatherForecast {
-        return WeatherForecast()
+        guard let forecastList = response["list"] as! [[String: Any]]? else {
+            throw NetworkingError.apiError
+        }
+        
+        let forecastItems = try forecastList.map({ listItem -> ForecastItem in
+            guard let unixUtc = listItem["dt"] as! Double?,
+                let main = listItem["main"] as! [String: Any]?,
+                let weather = listItem["weather"] as! [[String: Any]]? else {
+                throw NetworkingError.apiError
+            }
+            
+            guard let tempKelvin = main["temp"] as! NSNumber?,
+                let icon = weather[0]["icon"] as! String?,
+                let description = weather[0]["main"] as! String? else {
+                throw NetworkingError.apiError
+            }
+            
+            return ForecastItem(
+                icon: icon,
+                description: description,
+                temperatureKelvin: tempKelvin.floatValue,
+                time: Date(timeIntervalSince1970: unixUtc))
+        })
+        
+        return WeatherForecast(list: forecastItems)
     }
     
     func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<WeatherForecast> {
