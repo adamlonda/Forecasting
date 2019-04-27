@@ -8,24 +8,41 @@
 
 import Foundation
 
+enum TimeHorizon {
+    case today, tomorrow
+    case twoDays, threeDdays
+    case fourDays, fiveDays
+}
+
+extension Date {
+    func getTimeHorizon() -> TimeHorizon {
+        let calendar = Calendar.current
+        
+        //TODO: TimeHorizon computation
+        let todaysDay = calendar.component(.day, from: Date())
+        let day = calendar.component(.day, from: self)
+        fatalError("Not implemented")
+    }
+}
+
 struct ForecastItem {
     let icon: String
     let description: String
     let temperatureKelvin: Float
-    let time: Date
+    let dateTime: Date
     
-    init(icon: String, description: String, temperatureKelvin: Float, time: Date) {
+    init(icon: String, description: String, temperatureKelvin: Float, dateTime: Date) {
         self.icon = icon
         self.description = description
         self.temperatureKelvin = temperatureKelvin
-        self.time = time
+        self.dateTime = dateTime
     }
 }
 
 struct WeatherForecast {
-    let list: [ForecastItem]
+    let nextFiveDays: [TimeHorizon: [ForecastItem]]
     
-    init(list: [ForecastItem]) {
-        self.list = list
+    init(nextFiveDays: [TimeHorizon: [ForecastItem]]) {
+        self.nextFiveDays = nextFiveDays
     }
 }

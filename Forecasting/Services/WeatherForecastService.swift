@@ -44,10 +44,11 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
                 icon: icon,
                 description: description,
                 temperatureKelvin: tempKelvin.floatValue,
-                time: Date(timeIntervalSince1970: unixUtc))
+                dateTime: Date(timeIntervalSince1970: unixUtc))
         })
         
-        return WeatherForecast(list: forecastItems)
+        let nextFiveDays = Dictionary(grouping: forecastItems, by: { $0.dateTime.getTimeHorizon() })
+        return WeatherForecast(nextFiveDays: nextFiveDays)
     }
     
     func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<WeatherForecast> {
