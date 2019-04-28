@@ -12,17 +12,7 @@ enum TimeHorizon {
     case today, tomorrow
     case twoDays, threeDdays
     case fourDays, fiveDays
-}
-
-extension Date {
-    func getTimeHorizon() -> TimeHorizon {
-        let calendar = Calendar.current
-        
-        //TODO: TimeHorizon computation
-        let todaysDay = calendar.component(.day, from: Date())
-        let day = calendar.component(.day, from: self)
-        fatalError("Not implemented")
-    }
+    case other
 }
 
 struct ForecastItem {
