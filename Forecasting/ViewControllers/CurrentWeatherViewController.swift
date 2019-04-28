@@ -101,58 +101,58 @@ extension Int {
         
         // MARK: North
         if 348 < degrees || degrees <= 11 {
-            return WindDirection.n
+            return .n
         }
         if 11 < degrees && degrees <= 33 {
-            return WindDirection.nne
+            return .nne
         }
         if 33 < degrees && degrees <= 56 {
-            return WindDirection.ne
+            return .ne
         }
         if 56 < degrees && degrees <= 78 {
-            return WindDirection.ene
+            return .ene
         }
         
         // MARK: East
         if 78 < degrees && degrees <= 101 {
-            return WindDirection.e
+            return .e
         }
         if 101 < degrees && degrees <= 123 {
-            return WindDirection.ese
+            return .ese
         }
         if 123 < degrees && degrees <= 146 {
-            return WindDirection.se
+            return .se
         }
         if 146 < degrees && degrees <= 168 {
-            return WindDirection.sse
+            return .sse
         }
         
         // MARK: South
         if 168 < degrees && degrees <= 191 {
-            return WindDirection.s
+            return .s
         }
         if 191 < degrees && degrees <= 213 {
-            return WindDirection.ssw
+            return .ssw
         }
         if 213 < degrees && degrees <= 236 {
-            return WindDirection.sw
+            return .sw
         }
         if 236 < degrees && degrees <= 258 {
-            return WindDirection.wsw
+            return .wsw
         }
         
         // MARK: West
         if 258 < degrees && degrees <= 281 {
-            return WindDirection.w
+            return .w
         }
         if 281 < degrees && degrees <= 303 {
-            return WindDirection.wnw
+            return .wnw
         }
         if 303 < degrees && degrees <= 326 {
-            return WindDirection.nw
+            return .nw
         }
         if 326 < degrees && degrees <= 348 {
-            return WindDirection.nnw
+            return .nnw
         }
         
         fatalError("Should not happen")
