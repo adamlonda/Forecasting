@@ -17,10 +17,35 @@
                     <view key="view" contentMode="scaleToFill" id="bbF-bv-eho">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TPw-Mk-Elc">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="forecastTableViewCell" id="SXy-iD-oGh">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SXy-iD-oGh" id="Zev-Hh-58Q">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="TPw-Mk-Elc" firstAttribute="trailing" secondItem="8MQ-1d-fll" secondAttribute="trailing" id="MSI-Sw-GuQ"/>
+                            <constraint firstItem="TPw-Mk-Elc" firstAttribute="top" secondItem="8MQ-1d-fll" secondAttribute="top" id="Ovh-89-zLg"/>
+                            <constraint firstItem="TPw-Mk-Elc" firstAttribute="bottom" secondItem="8MQ-1d-fll" secondAttribute="bottom" id="ciC-by-yGe"/>
+                            <constraint firstItem="TPw-Mk-Elc" firstAttribute="leading" secondItem="8MQ-1d-fll" secondAttribute="leading" id="evL-dx-JhP"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="8MQ-1d-fll"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Forecast" image="ForecastIcon" id="w61-gL-T8z" userLabel="Forecast"/>
+                    <connections>
+                        <outlet property="tableView" destination="TPw-Mk-Elc" id="RP3-ld-7kh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RxX-0g-VTu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
