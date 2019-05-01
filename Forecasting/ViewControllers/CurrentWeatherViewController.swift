@@ -9,7 +9,7 @@
 import RxSwift
 import UIKit
 
-class CurrentWeatherViewController: ViewControllerBase {
+class CurrentWeatherViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var weatherLabel: UILabel!
     @IBOutlet var weatherImageView: UIImageView!

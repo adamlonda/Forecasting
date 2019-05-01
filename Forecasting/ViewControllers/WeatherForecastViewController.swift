@@ -9,9 +9,7 @@
 import RxSwift
 import UIKit
 
-class WeatherForecastViewController: ViewControllerBase, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet var tableView: UITableView!
-    
+class WeatherForecastViewController: UITableViewController {
     var locationService: LocationProtocol?
     var weatherService: WeatherForecastProtocol?
     
@@ -33,7 +31,7 @@ class WeatherForecastViewController: ViewControllerBase, UITableViewDelegate, UI
         }).subscribe(
             onNext: { forecast in
                 self.weatherForecast = forecast
-                self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
+//                self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
         },
             onError: { error in
                 self.presentNetworkError()
@@ -44,19 +42,19 @@ class WeatherForecastViewController: ViewControllerBase, UITableViewDelegate, UI
         })
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        fatalError("Not implemented")
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        fatalError("Not implemented")
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        fatalError("Not implemented")
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        fatalError("Not implemented")
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        fatalError("Not implemented")
+//    }
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        fatalError("Not implemented")
+//    }
+//    
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        fatalError("Not implemented")
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        fatalError("Not implemented")
+//    }
 }
