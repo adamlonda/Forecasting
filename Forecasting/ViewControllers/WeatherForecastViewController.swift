@@ -42,19 +42,27 @@ class WeatherForecastViewController: UITableViewController {
         })
     }
     
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        fatalError("Not implemented")
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        return weatherForecast?.nextFiveDays.count ?? 0
 //    }
-//    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        fatalError("Not implemented")
+    
+//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        guard let timeHorizon = TimeHorizon(rawValue: section) else {
+//            fatalError("Invalid header")
+//        }
+//
+//        return weatherForecast?.nextFiveDays[timeHorizon]?.count ?? 0
 //    }
-//    
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        fatalError("Not implemented")
+    
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        guard let timeHorizon = TimeHorizon(rawValue: section) else {
+//            fatalError("Invalid header")
+//        }
+//
+//        return timeHorizon.getLabel()
 //    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        fatalError("Not implemented")
 //    }
 }

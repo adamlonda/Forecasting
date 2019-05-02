@@ -8,11 +8,22 @@
 
 import Foundation
 
-enum TimeHorizon {
-    case today, tomorrow
-    case twoDays, threeDdays
-    case fourDays, fiveDays
-    case other
+enum TimeHorizon: Int {
+    case today = 0, tomorrow = 1
+    case twoDays = 2, threeDdays = 3
+    case fourDays = 4, fiveDays = 5
+    case other = 6
+    
+    func getLabel() -> String {
+        switch self {
+        case .today:
+            return "Today"
+        case .tomorrow:
+            return "Tomorrow"
+        default:
+            return "In \(self.rawValue) days"
+        }
+    }
 }
 
 struct ForecastItem {
