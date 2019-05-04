@@ -9,7 +9,11 @@
 import UIKit
 
 class WeatherForecastTableViewCell: UITableViewCell {
-
+    @IBOutlet var forecastImageView: UIImageView!
+    @IBOutlet var timeLabel: UILabel!
+    @IBOutlet var descriptionLabel: UILabel!
+    @IBOutlet var temperatureLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
