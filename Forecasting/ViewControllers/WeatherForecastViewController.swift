@@ -42,17 +42,19 @@ class WeatherForecastViewController: UITableViewController {
         })
     }
     
-//    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
 //        return weatherForecast?.nextFiveDays.count ?? 0
-//    }
+        return 1
+    }
     
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        guard let timeHorizon = TimeHorizon(rawValue: section) else {
-//            fatalError("Invalid header")
-//        }
-//
-//        return weatherForecast?.nextFiveDays[timeHorizon]?.count ?? 0
-//    }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let timeHorizon = TimeHorizon(rawValue: 0/*section*/) else {
+            fatalError("Invalid header")
+        }
+
+        let rowsCount = weatherForecast?.nextFiveDays[timeHorizon]?.count
+        return rowsCount ?? 0
+    }
     
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 //        guard let timeHorizon = TimeHorizon(rawValue: section) else {
@@ -62,7 +64,12 @@ class WeatherForecastViewController: UITableViewController {
 //        return timeHorizon.getLabel()
 //    }
 //
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        fatalError("Not implemented")
-//    }
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "forecastTableViewCell", for: indexPath) as? WeatherForecastTableViewCell else {
+            fatalError("Table cell type mismatch")
+        }
+        
+        //TODO: Configure the cell
+        return cell
+    }
 }
