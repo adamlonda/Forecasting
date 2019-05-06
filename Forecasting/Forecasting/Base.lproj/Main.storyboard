@@ -303,8 +303,8 @@
                                             <color key="textColor" name="ForegroundBlue"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="fEv-xU-G47" userLabel="Time Info View">
-                                            <rect key="frame" x="80" y="7" width="245" height="46"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="fEv-xU-G47" userLabel="Time Info View">
+                                            <rect key="frame" x="80" y="8" width="245" height="44"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13:00" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="psZ-nZ-S3s" userLabel="Time Label">
                                                     <rect key="frame" x="0.0" y="0.0" width="245" height="20.5"/>
@@ -313,7 +313,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rain Showers" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K7m-uz-1CW" userLabel="Description Label">
-                                                    <rect key="frame" x="0.0" y="25.5" width="245" height="20.5"/>
+                                                    <rect key="frame" x="0.0" y="23.5" width="245" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>

@@ -31,7 +31,7 @@ class WeatherForecastViewController: UITableViewController {
         }).subscribe(
             onNext: { forecast in
                 self.weatherForecast = forecast
-//                self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
+                self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
         },
             onError: { error in
                 self.presentNetworkError()
@@ -56,14 +56,14 @@ class WeatherForecastViewController: UITableViewController {
         return rowsCount ?? 0
     }
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        guard let timeHorizon = TimeHorizon(rawValue: section) else {
-//            fatalError("Invalid header")
-//        }
-//
-//        return timeHorizon.getLabel()
-//    }
-//
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let timeHorizon = TimeHorizon(rawValue: section) else {
+            fatalError("Invalid header")
+        }
+
+        return timeHorizon.getLabel()
+    }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "forecastTableViewCell", for: indexPath) as? WeatherForecastTableViewCell else {
             fatalError("Table cell type mismatch")
