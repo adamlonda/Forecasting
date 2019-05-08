@@ -22,7 +22,7 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
         return responseCodeNum
     }
     
-    private func parseWeatherForecast(from response: [String: Any]) throws -> WeatherForecast {
+    private func parseWeatherForecast(from response: [String: Any]) throws -> [ForecastItem] {
         guard let forecastList = response["list"] as! [[String: Any]]? else {
             throw NetworkingError.apiError
         }
@@ -31,13 +31,13 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
             guard let unixUtc = listItem["dt"] as! Double?,
                 let main = listItem["main"] as! [String: Any]?,
                 let weather = listItem["weather"] as! [[String: Any]]? else {
-                throw NetworkingError.apiError
+                    throw NetworkingError.apiError
             }
             
             guard let tempKelvin = main["temp"] as! NSNumber?,
                 let icon = weather[0]["icon"] as! String?,
                 let description = weather[0]["main"] as! String? else {
-                throw NetworkingError.apiError
+                    throw NetworkingError.apiError
             }
             
             return ForecastItem(
@@ -47,16 +47,11 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
                 dateTime: Date(timeIntervalSince1970: unixUtc))
         })
         
-        let today = Date()
-        let nextFiveDays = Dictionary(grouping: forecastItems, by: {
-            $0.dateTime.getTimeHorizon(from: today)
-        })
-        
-        return WeatherForecast(nextFiveDays: nextFiveDays)
+        return forecastItems
     }
     
-    func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<WeatherForecast> {
-        return Observable<WeatherForecast>.create { (observer) -> Disposable in
+    func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[ForecastItem]> {
+        return Observable<[ForecastItem]>.create { (observer) -> Disposable in
             let url = "\(self.baseUrl)/forecast?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
             let request = Alamofire.request(url)
                 .responseJSON { response in
@@ -72,37 +67,5 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
                 request.cancel()
             })
         }
-    }
-}
-
-extension Date {
-    private func matchWith(_ date: Date, offset: Int) -> Bool {
-        let calendar = Calendar.current
-        let offsetted = Date(timeInterval: TimeInterval(offset * 24 * 3600), since: date)
-        
-        return (calendar.component(.day, from: offsetted) == calendar.component(.day, from: self) && calendar.component(.month, from: offsetted) == calendar.component(.month, from: self) && calendar.component(.year, from: offsetted) == calendar.component(.year, from: self))
-    }
-    
-    func getTimeHorizon(from date: Date) -> TimeHorizon {
-        if (matchWith(date, offset: 0)) {
-            return .today
-        }
-        if (matchWith(date, offset: 1)) {
-            return .tomorrow
-        }
-        if (matchWith(date, offset: 2)) {
-            return .twoDays
-        }
-        if (matchWith(date, offset: 3)) {
-            return .threeDdays
-        }
-        if (matchWith(date, offset: 4)) {
-            return .fourDays
-        }
-        if (matchWith(date, offset: 5)) {
-            return .fiveDays
-        }
-        
-        return .other
     }
 }

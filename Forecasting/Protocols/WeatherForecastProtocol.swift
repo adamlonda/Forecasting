@@ -9,5 +9,5 @@
 import RxSwift
 
 protocol WeatherForecastProtocol {
-    func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<WeatherForecast>
+    func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[ForecastItem]>
 }

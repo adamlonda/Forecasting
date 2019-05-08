@@ -13,14 +13,24 @@ class WeatherForecastViewController: UITableViewController {
     var locationService: LocationProtocol?
     var weatherService: WeatherForecastProtocol?
     
-    var weatherForecast: WeatherForecast?
+    var weatherForecast: [Forecast]?
     
-    private func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<WeatherForecast> {
+    private func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[Forecast]> {
         guard self.weatherService != nil else {
             fatalError("Should not happen.")
         }
         
         return self.weatherService!.getWeatherForecast(latitude: latitude, longitude: longitude)
+            .map({ items in
+                let today = Date()
+                let grouping = Dictionary(grouping: items, by: {
+                    $0.dateTime.getTimeHorizon(from: today)
+                })
+
+                return grouping.map({ (key, values) in
+                    return Forecast(timeHorizon: key, items: values)
+                })
+            })
     }
     
     override func viewDidLoad() {
@@ -48,12 +58,7 @@ class WeatherForecastViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let timeHorizon = TimeHorizon(rawValue: 0/*section*/) else {
-            fatalError("Invalid header")
-        }
-
-        let rowsCount = weatherForecast?.nextFiveDays[timeHorizon]?.count
-        return rowsCount ?? 0
+        return weatherForecast?[section].items.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

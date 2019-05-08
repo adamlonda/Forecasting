@@ -1,5 +1,5 @@
 //
-//  WeatherForecast.swift
+//  Forecast.swift
 //  Forecasting
 //
 //  Created by Adam Londa on 23/04/2019.
@@ -20,6 +20,8 @@ enum TimeHorizon: Int {
             return "Today"
         case .tomorrow:
             return "Tomorrow"
+        case .other:
+            return "Other"
         default:
             return "In \(self.rawValue) days"
         }
@@ -40,10 +42,12 @@ struct ForecastItem {
     }
 }
 
-struct WeatherForecast {
-    let nextFiveDays: [TimeHorizon: [ForecastItem]]
+struct Forecast {
+    let timeHorizon: TimeHorizon
+    let items: [ForecastItem]
     
-    init(nextFiveDays: [TimeHorizon: [ForecastItem]]) {
-        self.nextFiveDays = nextFiveDays
+    init(timeHorizon: TimeHorizon, items: [ForecastItem]) {
+        self.timeHorizon = timeHorizon
+        self.items = items
     }
 }
