@@ -31,36 +31,8 @@ extension UIViewController {
             title: "Network Error",
             message: "An error occured while getting current weather. Please check your internet connection and try again later.")
     }
-}
-
-extension Date {
-    private func matchWith(_ date: Date, offset: Int) -> Bool {
-        let calendar = Calendar.current
-        let offsetted = Date(timeInterval: TimeInterval(offset * 24 * 3600), since: date)
-        
-        return (calendar.component(.day, from: offsetted) == calendar.component(.day, from: self) && calendar.component(.month, from: offsetted) == calendar.component(.month, from: self) && calendar.component(.year, from: offsetted) == calendar.component(.year, from: self))
-    }
     
-    func getTimeHorizon(from date: Date) -> TimeHorizon {
-        if (matchWith(date, offset: 0)) {
-            return .today
-        }
-        if (matchWith(date, offset: 1)) {
-            return .tomorrow
-        }
-        if (matchWith(date, offset: 2)) {
-            return .twoDays
-        }
-        if (matchWith(date, offset: 3)) {
-            return .threeDdays
-        }
-        if (matchWith(date, offset: 4)) {
-            return .fourDays
-        }
-        if (matchWith(date, offset: 5)) {
-            return .fiveDays
-        }
-        
-        return .other
+    func celsiusLabelFrom(kelvin: Float) -> String {
+        return "\(Int(round(kelvin - 273.15)))°C"
     }
 }

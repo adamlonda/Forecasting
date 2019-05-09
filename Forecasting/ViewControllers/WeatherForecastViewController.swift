@@ -74,7 +74,50 @@ class WeatherForecastViewController: UITableViewController {
             fatalError("Table cell type mismatch")
         }
         
-        //TODO: Configure the cell
+        guard let section = weatherForecast?[indexPath.section] else {
+            return cell
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        
+        cell.timeLabel.text = dateFormatter.string(from: section.items[indexPath.row].dateTime)
+        cell.forecastImageView.image = UIImage(named: section.items[indexPath.row].icon)
+        cell.descriptionLabel.text = section.items[indexPath.row].description
+        cell.temperatureLabel.text = celsiusLabelFrom(kelvin: section.items[indexPath.row].temperatureKelvin)
+        
         return cell
+    }
+}
+
+extension Date {
+    private func matchWith(_ date: Date, offset: Int) -> Bool {
+        let calendar = Calendar.current
+        let offsetted = Date(timeInterval: TimeInterval(offset * 24 * 3600), since: date)
+        
+        return (calendar.component(.day, from: offsetted) == calendar.component(.day, from: self) && calendar.component(.month, from: offsetted) == calendar.component(.month, from: self) && calendar.component(.year, from: offsetted) == calendar.component(.year, from: self))
+    }
+    
+    func getTimeHorizon(from date: Date) -> TimeHorizon {
+        if (matchWith(date, offset: 0)) {
+            return .today
+        }
+        if (matchWith(date, offset: 1)) {
+            return .tomorrow
+        }
+        if (matchWith(date, offset: 2)) {
+            return .twoDays
+        }
+        if (matchWith(date, offset: 3)) {
+            return .threeDdays
+        }
+        if (matchWith(date, offset: 4)) {
+            return .fourDays
+        }
+        if (matchWith(date, offset: 5)) {
+            return .fiveDays
+        }
+        
+        return .other
     }
 }

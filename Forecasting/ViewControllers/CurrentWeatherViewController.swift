@@ -54,7 +54,7 @@ class CurrentWeatherViewController: UIViewController {
         }
         
         self.locationLabel.text = currentWeather.locationName
-        self.weatherLabel.text = "\(Int(round(currentWeather.temperatureKelvin - 273.15)))°C | \(currentWeather.description)"
+        self.weatherLabel.text = "\(celsiusLabelFrom(kelvin: currentWeather.temperatureKelvin)) | \(currentWeather.description)"
         self.weatherImageView.image = weatherImage
         
         self.humidityLabel.text = "\(currentWeather.humidity)%"
