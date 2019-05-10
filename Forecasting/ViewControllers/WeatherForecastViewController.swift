@@ -53,11 +53,15 @@ class WeatherForecastViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-//        return weatherForecast?.nextFiveDays.count ?? 0
-        return 1
+        guard let count = weatherForecast?.count else {
+            return 0
+        }
+        
+        return count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //FIXME: SIGABRT on section 5
         return weatherForecast?[section].items.count ?? 0
     }
     
