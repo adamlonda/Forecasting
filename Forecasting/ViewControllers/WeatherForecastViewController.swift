@@ -35,13 +35,15 @@ class WeatherForecastViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        weatherForecast = [Forecast]()
         
         _ = locationService?.locationFeed.flatMap({
             return self.getWeatherForecast(latitude: $0.latitude, longitude: $0.longitude)
         }).subscribe(
             onNext: { forecast in
-                self.weatherForecast = forecast
-                self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
+                self.weatherForecast?.removeAll()
+                self.weatherForecast?.append(contentsOf: forecast)
+                self.tableView.reloadData()
         },
             onError: { error in
                 self.presentNetworkError()
@@ -61,8 +63,11 @@ class WeatherForecastViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //FIXME: SIGABRT on section 5
-        return weatherForecast?[section].items.count ?? 0
+        guard let count = weatherForecast?[section].items.count else {
+            return 0
+        }
+        
+        return count
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
