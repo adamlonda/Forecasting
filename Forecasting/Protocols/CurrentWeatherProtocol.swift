@@ -1,5 +1,5 @@
 //
-//  WeatherProtocol.swift
+//  CurrentWeatherProtocol.swift
 //  Forecasting
 //
 //  Created by Adam Londa on 12/04/2019.
@@ -8,6 +8,6 @@
 
 import RxSwift
 
-protocol WeatherProtocol {
+protocol CurrentWeatherProtocol {
     func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather>
 }

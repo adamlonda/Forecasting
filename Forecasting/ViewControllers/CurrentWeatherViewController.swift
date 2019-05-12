@@ -1,5 +1,5 @@
 //
-//  TodayViewController.swift
+//  CurrentWeatherViewController.swift
 //  Forecasting
 //
 //  Created by Adam Londa on 05/04/2019.
@@ -9,7 +9,7 @@
 import RxSwift
 import UIKit
 
-class TodayViewController: UIViewController {
+class CurrentWeatherViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var weatherLabel: UILabel!
     @IBOutlet var weatherImageView: UIImageView!
@@ -24,18 +24,7 @@ class TodayViewController: UIViewController {
     private let notAvailableLabel = "N/A"
     
     var locationService: LocationProtocol?
-    var weatherService: WeatherProtocol?
-    
-    private func presentError(title: String, message: String) {
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
+    var weatherService: CurrentWeatherProtocol?
     
     private func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {
         guard self.weatherService != nil else {
@@ -65,7 +54,7 @@ class TodayViewController: UIViewController {
         }
         
         self.locationLabel.text = currentWeather.locationName
-        self.weatherLabel.text = "\(Int(round(currentWeather.temperatureKelvin - 273.15)))°C | \(currentWeather.description)"
+        self.weatherLabel.text = "\(celsiusLabelFrom(kelvin: currentWeather.temperatureKelvin)) | \(currentWeather.description)"
         self.weatherImageView.image = weatherImage
         
         self.humidityLabel.text = "\(currentWeather.humidity)%"
@@ -84,21 +73,16 @@ class TodayViewController: UIViewController {
         
         _ = locationService?.locationFeed.flatMap({
             self.getCurrentWeather(latitude: $0.latitude, longitude: $0.longitude)
-        })
-        .subscribe(
+        }).subscribe(
             onNext: { currentWeather in
                 self.display(currentWeather)
         },
             onError: { _ in
-                self.presentError(
-                    title: "Network Error",
-                    message: "An error occured while getting current weather. Please check your internet connection and try again later.")
+                self.presentNetworkError()
         })
         
         _ = locationService?.errorFeed.subscribe(onNext: { _ in
-            self.presentError(
-                title: "Geolocation Error",
-                message: "An error occured while getting your location. Please enable geolocation in your device settings for the Forecasting app, and try again.")
+            self.presentGeolocationError()
         })
     }
 }
@@ -117,58 +101,58 @@ extension Int {
         
         // MARK: North
         if 348 < degrees || degrees <= 11 {
-            return WindDirection.n
+            return .n
         }
         if 11 < degrees && degrees <= 33 {
-            return WindDirection.nne
+            return .nne
         }
         if 33 < degrees && degrees <= 56 {
-            return WindDirection.ne
+            return .ne
         }
         if 56 < degrees && degrees <= 78 {
-            return WindDirection.ene
+            return .ene
         }
         
         // MARK: East
         if 78 < degrees && degrees <= 101 {
-            return WindDirection.e
+            return .e
         }
         if 101 < degrees && degrees <= 123 {
-            return WindDirection.ese
+            return .ese
         }
         if 123 < degrees && degrees <= 146 {
-            return WindDirection.se
+            return .se
         }
         if 146 < degrees && degrees <= 168 {
-            return WindDirection.sse
+            return .sse
         }
         
         // MARK: South
         if 168 < degrees && degrees <= 191 {
-            return WindDirection.s
+            return .s
         }
         if 191 < degrees && degrees <= 213 {
-            return WindDirection.ssw
+            return .ssw
         }
         if 213 < degrees && degrees <= 236 {
-            return WindDirection.sw
+            return .sw
         }
         if 236 < degrees && degrees <= 258 {
-            return WindDirection.wsw
+            return .wsw
         }
         
         // MARK: West
         if 258 < degrees && degrees <= 281 {
-            return WindDirection.w
+            return .w
         }
         if 281 < degrees && degrees <= 303 {
-            return WindDirection.wnw
+            return .wnw
         }
         if 303 < degrees && degrees <= 326 {
-            return WindDirection.nw
+            return .nw
         }
         if 326 < degrees && degrees <= 348 {
-            return WindDirection.nnw
+            return .nnw
         }
         
         fatalError("Should not happen")
