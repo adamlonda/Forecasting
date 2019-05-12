@@ -10,10 +10,7 @@ Because of several CocoaPods packages are being used in the solution, please ope
 
 This app is a job interview project, written in my leisure time.
 
-## Included features finnished due April 22nd, 2019
+## Included features
 
 * Current weather details (The first tab)
-
-## Features not yet included
-
 * Weather forecast for the next few hours / days (The second tab)
