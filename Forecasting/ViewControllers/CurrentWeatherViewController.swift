@@ -9,7 +9,7 @@
 import RxSwift
 import UIKit
 
-class CurrentWeatherViewController: ViewControllerBase {
+class CurrentWeatherViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var weatherLabel: UILabel!
     @IBOutlet var weatherImageView: UIImageView!
@@ -54,7 +54,7 @@ class CurrentWeatherViewController: ViewControllerBase {
         }
         
         self.locationLabel.text = currentWeather.locationName
-        self.weatherLabel.text = "\(Int(round(currentWeather.temperatureKelvin - 273.15)))°C | \(currentWeather.description)"
+        self.weatherLabel.text = "\(celsiusLabelFrom(kelvin: currentWeather.temperatureKelvin)) | \(currentWeather.description)"
         self.weatherImageView.image = weatherImage
         
         self.humidityLabel.text = "\(currentWeather.humidity)%"

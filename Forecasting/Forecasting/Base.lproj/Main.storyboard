@@ -6,52 +6,11 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Forecast Tab-->
-        <scene sceneID="J0i-Ak-3jf">
-            <objects>
-                <viewController id="eiS-QX-uYd" userLabel="Forecast Tab" customClass="WeatherForecastViewController" customModule="Forecasting" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="bbF-bv-eho">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="TPw-Mk-Elc">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="forecastTableViewCell" id="SXy-iD-oGh">
-                                        <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SXy-iD-oGh" id="Zev-Hh-58Q">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <sections/>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="TPw-Mk-Elc" firstAttribute="trailing" secondItem="8MQ-1d-fll" secondAttribute="trailing" id="MSI-Sw-GuQ"/>
-                            <constraint firstItem="TPw-Mk-Elc" firstAttribute="top" secondItem="8MQ-1d-fll" secondAttribute="top" id="Ovh-89-zLg"/>
-                            <constraint firstItem="TPw-Mk-Elc" firstAttribute="bottom" secondItem="8MQ-1d-fll" secondAttribute="bottom" id="ciC-by-yGe"/>
-                            <constraint firstItem="TPw-Mk-Elc" firstAttribute="leading" secondItem="8MQ-1d-fll" secondAttribute="leading" id="evL-dx-JhP"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="8MQ-1d-fll"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Forecast" image="ForecastIcon" id="w61-gL-T8z" userLabel="Forecast"/>
-                    <connections>
-                        <outlet property="tableView" destination="TPw-Mk-Elc" id="RP3-ld-7kh"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RxX-0g-VTu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="990" y="260"/>
-        </scene>
         <!--Today Tab-->
         <scene sceneID="e0t-cg-THG">
             <objects>
@@ -72,7 +31,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wB-NC-59r" userLabel="Weather Label">
                                         <rect key="frame" x="0.0" y="27.5" width="374" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" red="0.18431372549019609" green="0.56862745098039214" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" name="ForegroundBlue"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -305,12 +264,93 @@
                     </tabBar>
                     <connections>
                         <segue destination="o0B-Iy-G1f" kind="relationship" relationship="viewControllers" id="Tga-y8-SQN"/>
-                        <segue destination="eiS-QX-uYd" kind="relationship" relationship="viewControllers" id="FRe-95-wQl"/>
+                        <segue destination="TrQ-xV-ebr" kind="relationship" relationship="viewControllers" id="MfP-Qc-Atb"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AlR-BF-wdz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="70" y="-65"/>
+        </scene>
+        <!--Forecast Tab-->
+        <scene sceneID="z4k-Og-E0Q">
+            <objects>
+                <tableViewController id="TrQ-xV-ebr" userLabel="Forecast Tab" customClass="WeatherForecastViewController" customModule="Forecasting" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="qwR-dm-LAY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="forecastTableViewCell" rowHeight="60" id="iVx-hQ-MpS" customClass="WeatherForecastTableViewCell" customModule="Forecasting" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iVx-hQ-MpS" id="6ch-6J-1Wu">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="59.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="myx-hJ-Q3I" userLabel="Forecast Image View">
+                                            <rect key="frame" x="20" y="-0.5" width="60" height="60.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="0MS-x8-5na"/>
+                                                <constraint firstAttribute="width" constant="60" id="pFg-do-T7e"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22°" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BE-KN-dak" userLabel="Temperature Label">
+                                            <rect key="frame" x="305" y="0.0" width="89" height="59.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="59.5" id="6PF-xW-aXm"/>
+                                                <constraint firstAttribute="width" constant="89" id="cqO-6e-eIa"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                            <color key="textColor" name="ForegroundBlue"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="fEv-xU-G47" userLabel="Time Info View">
+                                            <rect key="frame" x="80" y="8" width="225" height="44"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13:00" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="psZ-nZ-S3s" userLabel="Time Label">
+                                                    <rect key="frame" x="0.0" y="0.0" width="225" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rain Showers" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K7m-uz-1CW" userLabel="Description Label">
+                                                    <rect key="frame" x="0.0" y="23.5" width="225" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="myx-hJ-Q3I" firstAttribute="centerY" secondItem="6ch-6J-1Wu" secondAttribute="centerY" id="4kS-yX-aa0"/>
+                                        <constraint firstItem="fEv-xU-G47" firstAttribute="leading" secondItem="myx-hJ-Q3I" secondAttribute="trailing" id="FlP-Dv-vFt"/>
+                                        <constraint firstAttribute="bottom" secondItem="3BE-KN-dak" secondAttribute="bottom" id="Rhm-lb-um3"/>
+                                        <constraint firstItem="fEv-xU-G47" firstAttribute="centerY" secondItem="6ch-6J-1Wu" secondAttribute="centerY" id="YVW-gc-pxO"/>
+                                        <constraint firstItem="3BE-KN-dak" firstAttribute="top" secondItem="6ch-6J-1Wu" secondAttribute="top" id="fxC-0B-QQy"/>
+                                        <constraint firstItem="myx-hJ-Q3I" firstAttribute="leading" secondItem="6ch-6J-1Wu" secondAttribute="leading" constant="20" id="iHP-py-Wf8"/>
+                                        <constraint firstItem="3BE-KN-dak" firstAttribute="leading" secondItem="fEv-xU-G47" secondAttribute="trailing" id="k9u-Jb-EGI"/>
+                                        <constraint firstAttribute="trailing" secondItem="3BE-KN-dak" secondAttribute="trailing" constant="20" id="mO8-Xx-Fax"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="K7m-uz-1CW" id="Q0h-8a-LK9"/>
+                                    <outlet property="forecastImageView" destination="myx-hJ-Q3I" id="2Py-XT-0Y7"/>
+                                    <outlet property="temperatureLabel" destination="3BE-KN-dak" id="eOJ-9k-Tpb"/>
+                                    <outlet property="timeLabel" destination="psZ-nZ-S3s" id="Jio-Zm-yAU"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="TrQ-xV-ebr" id="aUO-fi-ngE"/>
+                            <outlet property="delegate" destination="TrQ-xV-ebr" id="maI-Dj-1pw"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Forecast" image="ForecastIcon" id="hSi-Tn-Ane" userLabel="Forecast"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W4G-D2-SuC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="989.85507246376824" y="316.07142857142856"/>
         </scene>
     </scenes>
     <resources>
@@ -321,5 +361,8 @@
         <image name="TodayIcon" width="24.5" height="24"/>
         <image name="Wind" width="30" height="30"/>
         <image name="WindDirection" width="30" height="30"/>
+        <namedColor name="ForegroundBlue">
+            <color red="0.34509803921568627" green="0.63529411764705879" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
