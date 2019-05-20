@@ -26,6 +26,9 @@ class CurrentWeatherViewController: UIViewController {
     var locationService: LocationProtocol?
     var weatherService: CurrentWeatherProtocol?
     
+    private var locationChanges: Disposable?
+    private var locationErrors: Disposable?
+    
     private func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {
         guard self.weatherService != nil else {
             fatalError("Should not happen.")
@@ -71,7 +74,7 @@ class CurrentWeatherViewController: UIViewController {
         super.viewDidLoad()
         setDefaultDisplay()
         
-        _ = locationService?.locationFeed.flatMap({
+        locationChanges = locationService?.locationFeed.flatMap({
             self.getCurrentWeather(latitude: $0.latitude, longitude: $0.longitude)
         }).subscribe(
             onNext: { currentWeather in
@@ -81,9 +84,14 @@ class CurrentWeatherViewController: UIViewController {
                 self.presentNetworkError()
         })
         
-        _ = locationService?.errorFeed.subscribe(onNext: { _ in
+        locationErrors = locationService?.errorFeed.subscribe(onNext: { _ in
             self.presentGeolocationError()
         })
+    }
+    
+    deinit {
+        locationChanges?.dispose()
+        locationErrors?.dispose()
     }
 }
 
