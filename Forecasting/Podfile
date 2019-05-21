@@ -4,6 +4,7 @@ platform :ios, '11.0'
 target 'Forecasting' do
     use_frameworks!
     pod 'Alamofire'
+    pod 'RxAlamofire'
     pod 'RxCoreLocation'
     pod 'Swinject'
     pod 'SwinjectStoryboard'

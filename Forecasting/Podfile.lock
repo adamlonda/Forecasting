@@ -1,5 +1,10 @@
 PODS:
   - Alamofire (4.8.2)
+  - RxAlamofire (4.4.0):
+    - RxAlamofire/Core (= 4.4.0)
+  - RxAlamofire/Core (4.4.0):
+    - Alamofire (~> 4.8)
+    - RxSwift (~> 4.4)
   - RxAtomic (4.4.2)
   - RxCocoa (4.4.2):
     - RxSwift (>= 4.4.2, ~> 4.4)
@@ -16,6 +21,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - RxAlamofire
   - RxCoreLocation
   - Swinject
   - SwinjectStoryboard
@@ -23,6 +29,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - RxAlamofire
     - RxAtomic
     - RxCocoa
     - RxCoreLocation
@@ -32,6 +39,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  RxAlamofire: ecc5e458ee11250938d23360179eb3a37cd3ee1e
   RxAtomic: d00e97c10db88c6f08540e0bf2752fc5a2404167
   RxCocoa: 477990dc3b4c3ff55fb0ac77e1cc06244e0aaec8
   RxCoreLocation: 23d0f2f06fba5af57f2fa9064a5c165e75eb4c33
@@ -39,6 +47,6 @@ SPEC CHECKSUMS:
   Swinject: 48a96cda93633cf2860697b4ce76ab5db9ebaca2
   SwinjectStoryboard: 32512ef16c2b0ff5b8f823b23539c4a50f6d3383
 
-PODFILE CHECKSUM: f5103434b42701a7b15f0d1126d41df5051e66d0
+PODFILE CHECKSUM: caaf79731f94fb182c78d00b9bc78bbca0c7ad5b
 
 COCOAPODS: 1.5.3
