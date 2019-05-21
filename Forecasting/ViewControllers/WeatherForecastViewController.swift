@@ -15,6 +15,9 @@ class WeatherForecastViewController: UITableViewController {
     
     var weatherForecast: [Forecast]?
     
+    private var locationChanges: Disposable?
+    private var locationErrors: Disposable?
+    
     private func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[Forecast]> {
         guard self.weatherService != nil else {
             fatalError("Should not happen.")
@@ -37,7 +40,7 @@ class WeatherForecastViewController: UITableViewController {
         super.viewDidLoad()
         weatherForecast = [Forecast]()
         
-        _ = locationService?.locationFeed.flatMap({
+        locationChanges = locationService?.locationFeed.flatMap({
             return self.getWeatherForecast(latitude: $0.latitude, longitude: $0.longitude)
         }).subscribe(
             onNext: { forecast in
@@ -49,9 +52,14 @@ class WeatherForecastViewController: UITableViewController {
                 self.presentNetworkError()
         })
         
-        _ = locationService?.errorFeed.subscribe(onNext: { _ in
+        locationErrors = locationService?.errorFeed.subscribe(onNext: { _ in
             self.presentGeolocationError()
         })
+    }
+    
+    deinit {
+        locationChanges?.dispose()
+        locationErrors?.dispose()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
