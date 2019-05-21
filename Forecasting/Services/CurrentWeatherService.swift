@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import RxAlamofire
 import RxSwift
 
 class CurrentWeatherService: WeatherServiceBase, CurrentWeatherProtocol {
@@ -52,21 +53,27 @@ class CurrentWeatherService: WeatherServiceBase, CurrentWeatherProtocol {
     }
     
     func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {
-        return Observable<CurrentWeather>.create { (observer) -> Disposable in
-            let url = "\(self.baseUrl)/weather?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
-            let request = Alamofire.request(url)
-                .responseJSON { response in
-                    do {
-                        let data = try self.check(response)
-                        observer.onNext(try self.parseCurrentWeather(from: data))
-                    } catch {
-                        observer.onError(error)
-                    }
-            }
-            
-            return Disposables.create(with: {
-                request.cancel()
+//        return Observable<CurrentWeather>.create { (observer) -> Disposable in
+//            let url = "\(self.baseUrl)/weather?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
+//            let request = Alamofire.request(url)
+//                .responseJSON { response in
+//                    do {
+//                        let data = try self.check(response)
+//                        observer.onNext(try self.parseCurrentWeather(from: data))
+//                    } catch {
+//                        observer.onError(error)
+//                    }
+//            }
+//
+//            return Disposables.create(with: {
+//                request.cancel()
+//            })
+//        }
+        
+        let url = "\(self.baseUrl)/weather?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
+        return RxAlamofire.requestJSON(.get, url)
+            .map({ response in
+                fatalError("Not implemented")
             })
-        }
     }
 }
