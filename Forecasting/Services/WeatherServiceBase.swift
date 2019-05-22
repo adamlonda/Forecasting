@@ -19,28 +19,12 @@ class WeatherServiceBase {
     internal let apiKey = "4b41e86332361042c6ee97624f64b591"
     internal let baseUrl = "https://api.openweathermap.org/data/2.5"
     
-    internal func getResponseCode(from data: [String: Any]) throws -> Int {
-        fatalError("To be implemented in the specific service")
-    }
-    
-    internal func check(_ response: DataResponse<Any>) throws -> [String: Any] {
-        guard response.result.error == nil else {
-            throw response.result.error!
-        }
-
-        guard let data = response.result.value as! [String: Any]? else {
-            throw NetworkingError.emptyResponse
-        }
-        
-        let responseCode = try getResponseCode(from: data)
-        
-        switch responseCode {
+    internal func check(response: HTTPURLResponse) -> Bool {
+        switch response.statusCode {
         case 200:
-            return data
-        case 401:
-            throw NetworkingError.invalidApiKey
+            return true
         default:
-            throw NetworkingError.apiError
+            return false
         }
     }
 }
