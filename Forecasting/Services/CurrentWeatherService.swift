@@ -6,17 +6,10 @@
 //  Copyright © 2019 Adam Londa. All rights reserved.
 //
 
-import Alamofire
+import RxAlamofire
 import RxSwift
 
 class CurrentWeatherService: WeatherServiceBase, CurrentWeatherProtocol {
-    override func getResponseCode(from data: [String : Any]) throws -> Int {
-        guard let responseCode = data["cod"] as! Int? else {
-            throw NetworkingError.noResponseCode
-        }
-        return responseCode
-    }
-    
     private func parseCurrentWeather(from response: [String: Any]) throws -> CurrentWeather {
         guard
             let locationName = response["name"] as! String?,
@@ -52,21 +45,16 @@ class CurrentWeatherService: WeatherServiceBase, CurrentWeatherProtocol {
     }
     
     func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {
-        return Observable<CurrentWeather>.create { (observer) -> Disposable in
-            let url = "\(self.baseUrl)/weather?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
-            let request = Alamofire.request(url)
-                .responseJSON { response in
-                    do {
-                        let data = try self.check(response)
-                        observer.onNext(try self.parseCurrentWeather(from: data))
-                    } catch {
-                        observer.onError(error)
+        let url = "\(self.baseUrl)/weather?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
+        return RxAlamofire.requestJSON(.get, url)
+            .map({ [weak self] (r, json) in
+                if (self?.check(response: r) == true), let data = json as? [String: Any] {
+                    let result = try self?.parseCurrentWeather(from: data)
+                    if result != nil {
+                        return result!
                     }
-            }
-            
-            return Disposables.create(with: {
-                request.cancel()
+                }
+                throw NetworkingError.apiError
             })
-        }
     }
 }

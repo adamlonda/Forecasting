@@ -6,22 +6,10 @@
 //  Copyright © 2019 Adam Londa. All rights reserved.
 //
 
-import Alamofire
+import RxAlamofire
 import RxSwift
 
 class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
-    override func getResponseCode(from data: [String : Any]) throws -> Int {
-        guard let responseCode = data["cod"] as! String? else {
-            throw NetworkingError.noResponseCode
-        }
-        
-        guard let responseCodeNum = Int(responseCode) else {
-            throw NetworkingError.noResponseCode
-        }
-        
-        return responseCodeNum
-    }
-    
     private func parseWeatherForecast(from response: [String: Any]) throws -> [ForecastItem] {
         guard let forecastList = response["list"] as! [[String: Any]]? else {
             throw NetworkingError.apiError
@@ -51,21 +39,16 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
     }
     
     func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[ForecastItem]> {
-        return Observable<[ForecastItem]>.create { (observer) -> Disposable in
-            let url = "\(self.baseUrl)/forecast?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
-            let request = Alamofire.request(url)
-                .responseJSON { response in
-                    do {
-                        let data = try self.check(response)
-                        observer.onNext(try self.parseWeatherForecast(from: data))
-                    } catch {
-                        observer.onError(error)
+        let url = "\(self.baseUrl)/forecast?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
+        return RxAlamofire.requestJSON(.get, url)
+            .map({ [weak self] (r, json) in
+                if (self?.check(response: r) == true), let data = json as? [String: Any] {
+                    let result = try self?.parseWeatherForecast(from: data)
+                    if result != nil {
+                        return result!
                     }
-            }
-            
-            return Disposables.create(with: {
-                request.cancel()
+                }
+                throw NetworkingError.apiError
             })
-        }
     }
 }
