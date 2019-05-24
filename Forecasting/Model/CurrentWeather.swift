@@ -29,3 +29,15 @@ struct CurrentWeather {
         self.windDegrees = windDegrees
     }
 }
+
+extension CurrentWeather: Decodable {
+    enum CurrentWeatherKeys: String, CodingKey {
+        case locationName = "name"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CurrentWeatherKeys.self)
+        let locationName: String = try container.decode(String.self, forKey: .locationName)
+        fatalError("Not implemented")
+    }
+}

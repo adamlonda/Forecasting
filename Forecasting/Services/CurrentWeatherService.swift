@@ -48,7 +48,8 @@ class CurrentWeatherService: WeatherServiceBase, CurrentWeatherProtocol {
         let url = "\(self.baseUrl)/weather?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
         return RxAlamofire.requestJSON(.get, url)
             .map({ [weak self] (r, json) in
-                if (self?.check(response: r) == true), let data = json as? [String: Any] {
+                if (self?.check(response: r) == true),
+                    let data = json as? [String: Any] {
                     let result = try self?.parseCurrentWeather(from: data)
                     if result != nil {
                         return result!
