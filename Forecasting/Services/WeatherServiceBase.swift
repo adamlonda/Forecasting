@@ -19,7 +19,7 @@ class WeatherServiceBase {
     internal let apiKey = "4b41e86332361042c6ee97624f64b591"
     internal let baseUrl = "https://api.openweathermap.org/data/2.5"
     
-    internal func check(response: HTTPURLResponse) -> Bool {
+    internal func check(_ response: HTTPURLResponse) -> Bool {
         switch response.statusCode {
         case 200:
             return true

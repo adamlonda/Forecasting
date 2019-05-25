@@ -41,8 +41,8 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
     func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[ForecastItem]> {
         let url = "\(self.baseUrl)/forecast?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
         return RxAlamofire.requestJSON(.get, url)
-            .map({ [weak self] (r, json) in
-                if (self?.check(response: r) == true), let data = json as? [String: Any] {
+            .map({ [weak self] (response, json) in
+                if (self?.check(response) == true), let data = json as? [String: Any] {
                     let result = try self?.parseWeatherForecast(from: data)
                     if result != nil {
                         return result!
