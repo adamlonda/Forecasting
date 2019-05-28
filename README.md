@@ -8,7 +8,8 @@
 
 Because of several CocoaPods packages are being used in the solution, please open the project using **Forecasting.xcworkspace**.
 
-This app is a job interview project, written in my leisure time.
+This app is a job interview project, written in my leisure time. 
+For review purposes, please clone the **master** branch only!
 
 ## Included features
 
