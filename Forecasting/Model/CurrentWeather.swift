@@ -62,7 +62,7 @@ struct CurrentWeather: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CurrentWeatherKeys.self)
         let locationName = try container.decode(String.self, forKey: .locationName)
-        let weatherInfo = try container.decode(WeatherInfo.self, forKey: .weatherInfo)
+        let weatherInfo = try container.decode([WeatherInfo].self, forKey: .weatherInfo)
         fatalError("Not implemented")
     }
     
