@@ -10,6 +10,7 @@ struct CurrentWeather: Decodable {
     enum CurrentWeatherKeys: String, CodingKey {
         case locationName = "name"
         case weatherInfo = "weather"
+        case mainInfo = "main"
     }
     
     struct WeatherInfo: Decodable {
@@ -34,9 +35,28 @@ struct CurrentWeather: Decodable {
         }
     }
     
+    struct MainInfo: Decodable {
+        enum MainInfoKeys: String, CodingKey {
+            case temperatureKelvin = "temp"
+        }
+        
+        let temperatureKelvin: Float
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: MainInfoKeys.self)
+            let temperatureKelvin = try container.decode(Float.self, forKey: .temperatureKelvin)
+            self.init(temperatureKelvin: temperatureKelvin)
+        }
+        
+        init(temperatureKelvin: Float) {
+            self.temperatureKelvin = temperatureKelvin
+        }
+    }
+    
     let locationName: String
     
     private let weatherInfo: WeatherInfo
+    private let mainInfo: MainInfo
 //    let icon: String
 //    let description: String
     
@@ -52,7 +72,13 @@ struct CurrentWeather: Decodable {
         }
     }
     
-    let temperatureKelvin: Float
+    var temperatureKelvin: Float {
+        get {
+            return mainInfo.temperatureKelvin
+        }
+    }
+    
+//    let temperatureKelvin: Float
     let humidity: Int
     let precipitation: Int?
     let pressure: Int
@@ -63,14 +89,16 @@ struct CurrentWeather: Decodable {
         let container = try decoder.container(keyedBy: CurrentWeatherKeys.self)
         let locationName = try container.decode(String.self, forKey: .locationName)
         let weatherInfo = try container.decode([WeatherInfo].self, forKey: .weatherInfo)
+        let mainInfo = try container.decode(MainInfo.self, forKey: .mainInfo)
         fatalError("Not implemented")
     }
     
     init(locationName: String,
          weatherInfo: WeatherInfo,
+         mainInfo: MainInfo,
 //         icon: String,
 //         description: String,
-         temperatureKelvin: Float,
+//         temperatureKelvin: Float,
          humidity: Int,
          precipitation: Int?,
          pressure: Int,
@@ -78,9 +106,10 @@ struct CurrentWeather: Decodable {
          windDegrees: Int) {
         self.locationName = locationName
         self.weatherInfo = weatherInfo
+        self.mainInfo = mainInfo
 //        self.icon = icon
 //        self.description = description
-        self.temperatureKelvin = temperatureKelvin
+//        self.temperatureKelvin = temperatureKelvin
         self.humidity = humidity
         self.precipitation = precipitation
         self.pressure = pressure
