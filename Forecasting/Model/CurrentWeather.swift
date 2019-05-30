@@ -11,8 +11,10 @@ struct CurrentWeather: Decodable {
         case locationName = "name"
         case weatherInfo = "weather"
         case mainInfo = "main"
+        case windInfo = "wind"
     }
     
+    //MARK: Description & icon
     struct WeatherInfo: Decodable {
         enum WeatherInfoKeys: String, CodingKey {
             case description = "main"
@@ -35,21 +37,57 @@ struct CurrentWeather: Decodable {
         }
     }
     
+    //MARK: Temperature, pressure & humidity
     struct MainInfo: Decodable {
         enum MainInfoKeys: String, CodingKey {
             case temperatureKelvin = "temp"
+            case pressure = "pressure"
+            case humidity = "humidity"
         }
         
         let temperatureKelvin: Float
+        let pressure: Int
+        let humidity: Int
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: MainInfoKeys.self)
             let temperatureKelvin = try container.decode(Float.self, forKey: .temperatureKelvin)
-            self.init(temperatureKelvin: temperatureKelvin)
+            let pressure = try container.decode(Int.self, forKey: .pressure)
+            let humidity = try container.decode(Int.self, forKey: .humidity)
+            
+            self.init(
+                temperatureKelvin: temperatureKelvin,
+                pressure: pressure,
+                humidity: humidity)
         }
         
-        init(temperatureKelvin: Float) {
+        init(temperatureKelvin: Float, pressure: Int, humidity: Int) {
             self.temperatureKelvin = temperatureKelvin
+            self.pressure = pressure
+            self.humidity = humidity
+        }
+    }
+    
+    //MARK: Wind speed & direction
+    struct WindInfo: Decodable {
+        enum WindInfoKeys: String, CodingKey {
+            case speed = "speed"
+            case directionDegree = "deg"
+        }
+        
+        let speed: Float
+        let directionDegree: Int
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: WindInfoKeys.self)
+            let speed = try container.decode(Float.self, forKey: .speed)
+            let directionDegree = try container.decode(Int.self, forKey: .directionDegree)
+            self.init(speed: speed, directionDegree: directionDegree)
+        }
+        
+        init(speed: Float, directionDegree: Int) {
+            self.speed = speed
+            self.directionDegree = directionDegree
         }
     }
     
@@ -57,6 +95,7 @@ struct CurrentWeather: Decodable {
     
     private let weatherInfo: WeatherInfo
     private let mainInfo: MainInfo
+    private let windInfo: WindInfo
 //    let icon: String
 //    let description: String
     
@@ -78,42 +117,70 @@ struct CurrentWeather: Decodable {
         }
     }
     
+    var pressure: Int {
+        get {
+            return mainInfo.pressure
+        }
+    }
+    
+    var humidity: Int {
+        get {
+            return mainInfo.humidity
+        }
+    }
+    
+    var windSpeed: Float {
+        get {
+            return windInfo.speed
+        }
+    }
+    
+    var windDegrees: Int {
+        get {
+            return windInfo.directionDegree
+        }
+    }
+    
 //    let temperatureKelvin: Float
-    let humidity: Int
+//    let humidity: Int
     let precipitation: Int?
-    let pressure: Int
-    let windSpeed: Float
-    let windDegrees: Int
+//    let pressure: Int
+//    let windSpeed: Float
+//    let windDegrees: Int
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CurrentWeatherKeys.self)
         let locationName = try container.decode(String.self, forKey: .locationName)
         let weatherInfo = try container.decode([WeatherInfo].self, forKey: .weatherInfo)
         let mainInfo = try container.decode(MainInfo.self, forKey: .mainInfo)
+        let windInfo = try container.decode(WindInfo.self, forKey: .windInfo)
         fatalError("Not implemented")
     }
     
     init(locationName: String,
          weatherInfo: WeatherInfo,
          mainInfo: MainInfo,
+         windInfo: WindInfo,
 //         icon: String,
 //         description: String,
 //         temperatureKelvin: Float,
-         humidity: Int,
-         precipitation: Int?,
-         pressure: Int,
-         windSpeed: Float,
-         windDegrees: Int) {
+//         humidity: Int,
+         precipitation: Int?
+//         pressure: Int,
+//         windSpeed: Float,
+//         windDegrees: Int
+        ) {
         self.locationName = locationName
         self.weatherInfo = weatherInfo
         self.mainInfo = mainInfo
+        self.windInfo = windInfo
 //        self.icon = icon
 //        self.description = description
 //        self.temperatureKelvin = temperatureKelvin
-        self.humidity = humidity
+//        self.humidity = humidity
         self.precipitation = precipitation
-        self.pressure = pressure
-        self.windSpeed = windSpeed
-        self.windDegrees = windDegrees
+//        self.pressure = pressure
+//        self.windSpeed = windSpeed
+//        self.windDegrees = windDegrees
     }
 }
