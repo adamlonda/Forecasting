@@ -61,8 +61,8 @@ class CurrentWeatherViewController: UIViewController {
         self.weatherImageView.image = weatherImage
         
         self.humidityLabel.text = "\(currentWeather.humidity)%"
-        self.precipitationLabel.text = currentWeather.precipitation != nil
-            ? "\(currentWeather.precipitation!) mm"
+        self.precipitationLabel.text = currentWeather.mmRainVolume != nil
+            ? "\(currentWeather.mmRainVolume!) mm"
             : self.notAvailableLabel
         self.pressureLabel.text = "\(currentWeather.pressure) hPa"
         

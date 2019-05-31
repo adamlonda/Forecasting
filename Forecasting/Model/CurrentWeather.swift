@@ -12,6 +12,7 @@ struct CurrentWeather: Decodable {
         case weatherInfo = "weather"
         case mainInfo = "main"
         case windInfo = "wind"
+        case rainInfo = "rain"
     }
     
     //MARK: Description & icon
@@ -91,13 +92,31 @@ struct CurrentWeather: Decodable {
         }
     }
     
+    //MARK: Rain volume
+    struct RainInfo: Decodable {
+        enum RainInfoKeys: String, CodingKey {
+            case threeHours = "3h"
+        }
+        
+        let mmVolume: Int
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: RainInfoKeys.self)
+            let mmVolume = try container.decode(Int.self, forKey: .threeHours)
+            self.init(mmVolume: mmVolume)
+        }
+        
+        init(mmVolume: Int) {
+            self.mmVolume = mmVolume
+        }
+    }
+    
     let locationName: String
     
     private let weatherInfo: WeatherInfo
     private let mainInfo: MainInfo
     private let windInfo: WindInfo
-//    let icon: String
-//    let description: String
+    private let rainInfo: RainInfo?
     
     var icon: String {
         get {
@@ -141,46 +160,44 @@ struct CurrentWeather: Decodable {
         }
     }
     
-//    let temperatureKelvin: Float
-//    let humidity: Int
-    let precipitation: Int?
-//    let pressure: Int
-//    let windSpeed: Float
-//    let windDegrees: Int
+    var mmRainVolume: Int? {
+        get {
+            return rainInfo?.mmVolume
+        }
+    }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CurrentWeatherKeys.self)
+        
         let locationName = try container.decode(String.self, forKey: .locationName)
         let weatherInfo = try container.decode([WeatherInfo].self, forKey: .weatherInfo)
         let mainInfo = try container.decode(MainInfo.self, forKey: .mainInfo)
         let windInfo = try container.decode(WindInfo.self, forKey: .windInfo)
-        fatalError("Not implemented")
+        
+        let rainInfo: RainInfo?
+        do {
+            rainInfo = try container.decode(RainInfo?.self, forKey: .rainInfo)
+        } catch {
+            rainInfo = nil
+        }
+        
+        self.init(locationName: locationName,
+                  weatherInfo: weatherInfo[0],
+                  mainInfo: mainInfo,
+                  windInfo: windInfo,
+                  rainInfo: rainInfo)
     }
     
     init(locationName: String,
          weatherInfo: WeatherInfo,
          mainInfo: MainInfo,
          windInfo: WindInfo,
-//         icon: String,
-//         description: String,
-//         temperatureKelvin: Float,
-//         humidity: Int,
-         precipitation: Int?
-//         pressure: Int,
-//         windSpeed: Float,
-//         windDegrees: Int
+         rainInfo: RainInfo?
         ) {
         self.locationName = locationName
         self.weatherInfo = weatherInfo
         self.mainInfo = mainInfo
         self.windInfo = windInfo
-//        self.icon = icon
-//        self.description = description
-//        self.temperatureKelvin = temperatureKelvin
-//        self.humidity = humidity
-        self.precipitation = precipitation
-//        self.pressure = pressure
-//        self.windSpeed = windSpeed
-//        self.windDegrees = windDegrees
+        self.rainInfo = rainInfo
     }
 }
