@@ -192,8 +192,8 @@ struct CurrentWeather: Decodable {
          weatherInfo: WeatherInfo,
          mainInfo: MainInfo,
          windInfo: WindInfo,
-         rainInfo: RainInfo?
-        ) {
+         rainInfo: RainInfo?)
+    {
         self.locationName = locationName
         self.weatherInfo = weatherInfo
         self.mainInfo = mainInfo

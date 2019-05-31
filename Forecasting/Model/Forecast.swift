@@ -28,7 +28,7 @@ enum TimeHorizon: Int {
     }
 }
 
-struct ForecastItem {
+struct ForecastItem: Decodable {
     let icon: String
     let description: String
     let temperatureKelvin: Float

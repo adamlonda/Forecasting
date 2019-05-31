@@ -10,43 +10,51 @@ import RxAlamofire
 import RxSwift
 
 class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
-    private func parseWeatherForecast(from response: [String: Any]) throws -> [ForecastItem] {
-        guard let forecastList = response["list"] as! [[String: Any]]? else {
-            throw NetworkingError.apiError
-        }
-        
-        let forecastItems = try forecastList.map({ listItem -> ForecastItem in
-            guard let unixUtc = listItem["dt"] as! Double?,
-                let main = listItem["main"] as! [String: Any]?,
-                let weather = listItem["weather"] as! [[String: Any]]? else {
-                    throw NetworkingError.apiError
-            }
-            
-            guard let tempKelvin = main["temp"] as! NSNumber?,
-                let icon = weather[0]["icon"] as! String?,
-                let description = weather[0]["main"] as! String? else {
-                    throw NetworkingError.apiError
-            }
-            
-            return ForecastItem(
-                icon: icon,
-                description: description,
-                temperatureKelvin: tempKelvin.floatValue,
-                dateTime: Date(timeIntervalSince1970: unixUtc))
-        })
-        
-        return forecastItems
-    }
+//    private func parseWeatherForecast(from response: [String: Any]) throws -> [ForecastItem] {
+//        guard let forecastList = response["list"] as! [[String: Any]]? else {
+//            throw NetworkingError.apiError
+//        }
+//
+//        let forecastItems = try forecastList.map({ listItem -> ForecastItem in
+//            guard let unixUtc = listItem["dt"] as! Double?,
+//                let main = listItem["main"] as! [String: Any]?,
+//                let weather = listItem["weather"] as! [[String: Any]]? else {
+//                    throw NetworkingError.apiError
+//            }
+//
+//            guard let tempKelvin = main["temp"] as! NSNumber?,
+//                let icon = weather[0]["icon"] as! String?,
+//                let description = weather[0]["main"] as! String? else {
+//                    throw NetworkingError.apiError
+//            }
+//
+//            return ForecastItem(
+//                icon: icon,
+//                description: description,
+//                temperatureKelvin: tempKelvin.floatValue,
+//                dateTime: Date(timeIntervalSince1970: unixUtc))
+//        })
+//
+//        return forecastItems
+//    }
     
     func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[ForecastItem]> {
         let url = "\(self.baseUrl)/forecast?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
-        return RxAlamofire.requestJSON(.get, url)
-            .map({ [weak self] (response, json) in
-                if (self?.check(response) == true), let data = json as? [String: Any] {
-                    let result = try self?.parseWeatherForecast(from: data)
-                    if result != nil {
-                        return result!
-                    }
+//        return RxAlamofire.requestJSON(.get, url)
+//            .map({ [weak self] (response, json) in
+//                if (self?.check(response) == true), let data = json as? [String: Any] {
+//                    let result = try self?.parseWeatherForecast(from: data)
+//                    if result != nil {
+//                        return result!
+//                    }
+//                }
+//                throw NetworkingError.apiError
+//            })
+        
+        return RxAlamofire.requestData(.get, url)
+            .map({ [weak self] (response, data) in
+                if (self?.check(response) == true) {
+                    return try JSONDecoder().decode([ForecastItem].self, from: data)
                 }
                 throw NetworkingError.apiError
             })
