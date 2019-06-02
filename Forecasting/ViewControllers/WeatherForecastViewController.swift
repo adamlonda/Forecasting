@@ -13,27 +13,27 @@ class WeatherForecastViewController: UITableViewController {
     var locationService: LocationProtocol?
     var weatherService: WeatherForecastProtocol?
     
-    var weatherForecast: [Forecast]?
+    private var weatherForecast: [Forecast]?
     
     private var locationChanges: Disposable?
     private var locationErrors: Disposable?
     
     private func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[Forecast]> {
-        guard self.weatherService != nil else {
+        if self.weatherService == nil {
             fatalError("Should not happen.")
         }
         
         return self.weatherService!.getWeatherForecast(latitude: latitude, longitude: longitude)
-            .map({ items in
-                let today = Date()
-                let grouping = Dictionary(grouping: items, by: {
-                    $0.dateTime.getTimeHorizon(from: today)
-                })
-
-                return grouping.map({ (key, values) in
-                    return Forecast(timeHorizon: key, items: values)
-                })
-            })
+//            .map({ items in
+//                let today = Date()
+//                let grouping = Dictionary(grouping: items, by: {
+//                    $0.dateTime.getTimeHorizon(from: today)
+//                })
+//
+//                return grouping.map({ (key, values) in
+//                    return Forecast(timeHorizon: key, items: values)
+//                })
+//            })
     }
     
     override func viewDidLoad() {
@@ -44,8 +44,9 @@ class WeatherForecastViewController: UITableViewController {
             return self.getWeatherForecast(latitude: $0.latitude, longitude: $0.longitude)
         }).subscribe(
             onNext: { forecast in
-                self.weatherForecast?.removeAll()
-                self.weatherForecast?.append(contentsOf: forecast)
+//                self.weatherForecast?.removeAll()
+//                self.weatherForecast?.append(contentsOf: forecast)
+                self.weatherForecast = forecast
                 self.tableView.reloadData()
         },
             onError: { error in

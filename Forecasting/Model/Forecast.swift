@@ -105,10 +105,12 @@ struct ForecastItem: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ForecastItemKeys.self)
+        
         let dateTime = try container.decode(Date.self, forKey: .dateTime)
         let mainInfo = try container.decode(MainInfo.self, forKey: .mainInfo)
         let weatherInfo = try container.decode(WeatherInfo.self, forKey: .weatherInfo)
-        throw fatalError("Not implemented")
+        
+        self.init(dateTime: dateTime, mainInfo: mainInfo, weatherInfo: weatherInfo)
     }
     
     init(
@@ -127,12 +129,33 @@ struct ForecastItem: Decodable {
     }
 }
 
-struct Forecast {
-    let timeHorizon: TimeHorizon
-    let items: [ForecastItem]
+struct Forecast: Decodable {
+    enum ForecastKeys: String, CodingKey {
+        case ungrouppedItems = "list"
+    }
     
-    init(timeHorizon: TimeHorizon, items: [ForecastItem]) {
-        self.timeHorizon = timeHorizon
+//    let timeHorizon: TimeHorizon
+//    let items: [ForecastItem]
+    let items: [TimeHorizon: [ForecastItem]]
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: ForecastKeys.self)
+        let ungrouppedItems = try container.decode([ForecastItem].self, forKey: .ungrouppedItems)
+        
+        let today = Date()
+        let grouping = Dictionary(grouping: ungrouppedItems, by: {
+            $0.dateTime.getTimeHorizon(from: today)
+        })
+        
+//        return grouping.map({ (key, values) in
+//            return Forecast(timeHorizon: key, items: values)
+//        })
+        
+        self.init(items: grouping)
+    }
+    
+    init(items: [TimeHorizon: [ForecastItem]]) {
+//        self.timeHorizon = timeHorizon
         self.items = items
     }
 }

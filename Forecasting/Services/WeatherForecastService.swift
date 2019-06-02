@@ -38,7 +38,7 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
 //        return forecastItems
 //    }
     
-    func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[ForecastItem]> {
+    func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[Forecast]> {
         let url = "\(self.baseUrl)/forecast?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
 //        return RxAlamofire.requestJSON(.get, url)
 //            .map({ [weak self] (response, json) in
@@ -54,7 +54,7 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
         return RxAlamofire.requestData(.get, url)
             .map({ [weak self] (response, data) in
                 if (self?.check(response) == true) {
-                    return try JSONDecoder().decode([ForecastItem].self, from: data)
+                    return try JSONDecoder().decode(Forecast.self, from: data)
                 }
                 throw NetworkingError.apiError
             })
