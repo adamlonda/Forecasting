@@ -54,7 +54,8 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
         return RxAlamofire.requestData(.get, url)
             .map({ [weak self] (response, data) in
                 if (self?.check(response) == true) {
-                    return try JSONDecoder().decode(Forecast.self, from: data)
+                    let forecastInfo = try JSONDecoder().decode(ForecastInfo.self, from: data)
+                    fatalError("Not implemented")
                 }
                 throw NetworkingError.apiError
             })

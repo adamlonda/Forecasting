@@ -28,6 +28,7 @@ enum TimeHorizon: Int {
     }
 }
 
+//MARK: Forecast item
 struct ForecastItem: Decodable {
     enum ForecastItemKeys: String, CodingKey {
         case dateTime = "dt"
@@ -107,10 +108,10 @@ struct ForecastItem: Decodable {
         let container = try decoder.container(keyedBy: ForecastItemKeys.self)
         
         let dateTime = try container.decode(Date.self, forKey: .dateTime)
-        let mainInfo = try container.decode(MainInfo.self, forKey: .mainInfo)
+        let mainInfo = try container.decode([MainInfo].self, forKey: .mainInfo)
         let weatherInfo = try container.decode(WeatherInfo.self, forKey: .weatherInfo)
         
-        self.init(dateTime: dateTime, mainInfo: mainInfo, weatherInfo: weatherInfo)
+        self.init(dateTime: dateTime, mainInfo: mainInfo[0], weatherInfo: weatherInfo)
     }
     
     init(
@@ -129,33 +130,30 @@ struct ForecastItem: Decodable {
     }
 }
 
-struct Forecast: Decodable {
-    enum ForecastKeys: String, CodingKey {
-        case ungrouppedItems = "list"
+struct ForecastInfo: Decodable {
+    enum ForecastInfoKeys: String, CodingKey {
+        case items = "list"
     }
     
-//    let timeHorizon: TimeHorizon
-//    let items: [ForecastItem]
-    let items: [TimeHorizon: [ForecastItem]]
+    let items: [ForecastItem]
     
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: ForecastKeys.self)
-        let ungrouppedItems = try container.decode([ForecastItem].self, forKey: .ungrouppedItems)
-        
-        let today = Date()
-        let grouping = Dictionary(grouping: ungrouppedItems, by: {
-            $0.dateTime.getTimeHorizon(from: today)
-        })
-        
-//        return grouping.map({ (key, values) in
-//            return Forecast(timeHorizon: key, items: values)
-//        })
-        
-        self.init(items: grouping)
+        let container = try decoder.container(keyedBy: ForecastInfoKeys.self)
+        let items = try container.decode([ForecastItem].self, forKey: .items)
+        self.init(items: items)
     }
     
-    init(items: [TimeHorizon: [ForecastItem]]) {
-//        self.timeHorizon = timeHorizon
+    init(items: [ForecastItem]) {
+        self.items = items
+    }
+}
+
+struct Forecast {
+    let timeHorizon: TimeHorizon
+    let items: [ForecastItem]
+    
+    init(timeHorizon: TimeHorizon, items: [ForecastItem]) {
+        self.timeHorizon = timeHorizon
         self.items = items
     }
 }
