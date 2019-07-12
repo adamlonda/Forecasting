@@ -28,74 +28,71 @@ enum TimeHorizon: Int {
     }
 }
 
-//MARK: Forecast item
+struct TemperatureInfo: Decodable {
+    enum TemperatureInfoKeys: String, CodingKey {
+        case kelvin = "temp"
+    }
+    
+    let kelvin: Float
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: TemperatureInfoKeys.self)
+        let kelvin = try container.decode(Float.self, forKey: .kelvin)
+        self.init(kelvin: kelvin)
+    }
+    
+    init(kelvin: Float) {
+        self.kelvin = kelvin
+    }
+}
+
+struct Descriptives: Decodable {
+    enum DescriptivesKeys: String, CodingKey {
+        case icon = "icon"
+        case written = "main"
+    }
+    
+    let icon: String
+    let written: String
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: DescriptivesKeys.self)
+        let icon = try container.decode(String.self, forKey: .icon)
+        let written = try container.decode(String.self, forKey: .written)
+        self.init(icon: icon, written: written)
+    }
+    
+    init(icon: String, written: String) {
+        self.icon = icon
+        self.written = written
+    }
+}
+
 struct ForecastItem: Decodable {
     enum ForecastItemKeys: String, CodingKey {
         case dateTime = "dt"
-        case mainInfo = "main"
-        case weatherInfo = "weather"
+        case temperatureInfo = "main"
+        case descriptives = "weather"
     }
     
-    //MARK: Kelvin temperature
-    struct MainInfo: Decodable {
-        enum MainInfoKeys: String, CodingKey {
-            case temperatureKelvin = "temp"
-        }
-        
-        let temperatureKelvin: Float
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: MainInfoKeys.self)
-            let temperatureKelvin = try container.decode(Float.self, forKey: .temperatureKelvin)
-            self.init(temperatureKelvin: temperatureKelvin)
-        }
-        
-        init(temperatureKelvin: Float) {
-            self.temperatureKelvin = temperatureKelvin
-        }
-    }
-    
-    //MARK: Icon & description
-    struct WeatherInfo: Decodable {
-        enum WeatherInfoKeys: String, CodingKey {
-            case icon = "icon"
-            case description = "main"
-        }
-        
-        let icon: String
-        let description: String
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: WeatherInfoKeys.self)
-            let icon = try container.decode(String.self, forKey: .icon)
-            let description = try container.decode(String.self, forKey: .description)
-            self.init(icon: icon, description: description)
-        }
-        
-        init(icon: String, description: String) {
-            self.icon = icon
-            self.description = description
-        }
-    }
-    
-    private let mainInfo: MainInfo
-    private let weatherInfo: WeatherInfo
+    private let temperatureInfo: TemperatureInfo
+    private let descriptives: Descriptives
     
     var temperatureKelvin: Float {
         get {
-            return mainInfo.temperatureKelvin
+            return temperatureInfo.kelvin
         }
     }
     
     var icon: String {
         get {
-            return weatherInfo.icon
+            return descriptives.icon
         }
     }
     
     var description: String {
         get {
-            return weatherInfo.description
+            return descriptives.written
         }
     }
     
@@ -108,10 +105,10 @@ struct ForecastItem: Decodable {
         let container = try decoder.container(keyedBy: ForecastItemKeys.self)
         
         let dateTime = try container.decode(Date.self, forKey: .dateTime)
-        let mainInfo = try container.decode([MainInfo].self, forKey: .mainInfo)
-        let weatherInfo = try container.decode(WeatherInfo.self, forKey: .weatherInfo)
+        let temperatureInfo = try container.decode([TemperatureInfo].self, forKey: .temperatureInfo)
+        let descriptives = try container.decode(Descriptives.self, forKey: .descriptives)
         
-        self.init(dateTime: dateTime, mainInfo: mainInfo[0], weatherInfo: weatherInfo)
+        self.init(dateTime: dateTime, temperatureInfo: temperatureInfo[0], descriptives: descriptives)
     }
     
     init(
@@ -119,17 +116,18 @@ struct ForecastItem: Decodable {
 //         description: String,
 //         temperatureKelvin: Float,
          dateTime: Date,
-         mainInfo: MainInfo,
-         weatherInfo: WeatherInfo) {
+         temperatureInfo: TemperatureInfo,
+         descriptives: Descriptives) {
 //        self.icon = icon
 //        self.description = description
 //        self.temperatureKelvin = temperatureKelvin
         self.dateTime = dateTime
-        self.mainInfo = mainInfo
-        self.weatherInfo = weatherInfo
+        self.temperatureInfo = temperatureInfo
+        self.descriptives = descriptives
     }
 }
 
+// TODO: Rename to Forecast
 struct ForecastInfo: Decodable {
     enum ForecastInfoKeys: String, CodingKey {
         case items = "list"
@@ -148,6 +146,7 @@ struct ForecastInfo: Decodable {
     }
 }
 
+// Rename to GrouppedForecast
 struct Forecast {
     let timeHorizon: TimeHorizon
     let items: [ForecastItem]

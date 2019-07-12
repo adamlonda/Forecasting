@@ -55,7 +55,14 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
             .map({ [weak self] (response, data) in
                 if (self?.check(response) == true) {
                     let forecastInfo = try JSONDecoder().decode(ForecastInfo.self, from: data)
-                    fatalError("Not implemented")
+                    let today = Date()
+                    let grouping = Dictionary(grouping: forecastInfo.items, by: {
+                        $0.dateTime.getTimeHorizon(from: today)
+                    })
+    
+                    return grouping.map({ (key, values) in
+                        return Forecast(timeHorizon: key, items: values)
+                    })
                 }
                 throw NetworkingError.apiError
             })
