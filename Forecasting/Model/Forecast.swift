@@ -105,10 +105,10 @@ struct ForecastItem: Decodable {
         let container = try decoder.container(keyedBy: ForecastItemKeys.self)
         
         let dateTime = try container.decode(Date.self, forKey: .dateTime)
-        let temperatureInfo = try container.decode([TemperatureInfo].self, forKey: .temperatureInfo)
-        let descriptives = try container.decode(Descriptives.self, forKey: .descriptives)
+        let temperatureInfo = try container.decode(TemperatureInfo.self, forKey: .temperatureInfo)
+        let descriptives = try container.decode([Descriptives].self, forKey: .descriptives)
         
-        self.init(dateTime: dateTime, temperatureInfo: temperatureInfo[0], descriptives: descriptives)
+        self.init(dateTime: dateTime, temperatureInfo: temperatureInfo, descriptives: descriptives[0])
     }
     
     init(
@@ -127,16 +127,15 @@ struct ForecastItem: Decodable {
     }
 }
 
-// TODO: Rename to Forecast
-struct ForecastInfo: Decodable {
-    enum ForecastInfoKeys: String, CodingKey {
+struct UngrouppedForecast: Decodable {
+    enum UngrouppedForecastKeys: String, CodingKey {
         case items = "list"
     }
     
     let items: [ForecastItem]
     
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: ForecastInfoKeys.self)
+        let container = try decoder.container(keyedBy: UngrouppedForecastKeys.self)
         let items = try container.decode([ForecastItem].self, forKey: .items)
         self.init(items: items)
     }
@@ -146,8 +145,7 @@ struct ForecastInfo: Decodable {
     }
 }
 
-// Rename to GrouppedForecast
-struct Forecast {
+struct ForecastGroup {
     let timeHorizon: TimeHorizon
     let items: [ForecastItem]
     

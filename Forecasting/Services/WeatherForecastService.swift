@@ -38,7 +38,7 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
 //        return forecastItems
 //    }
     
-    func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[Forecast]> {
+    func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[ForecastGroup]> {
         let url = "\(self.baseUrl)/forecast?lat=\(latitude)&lon=\(longitude)&APPID=\(self.apiKey)"
 //        return RxAlamofire.requestJSON(.get, url)
 //            .map({ [weak self] (response, json) in
@@ -54,14 +54,16 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
         return RxAlamofire.requestData(.get, url)
             .map({ [weak self] (response, data) in
                 if (self?.check(response) == true) {
-                    let forecastInfo = try JSONDecoder().decode(ForecastInfo.self, from: data)
+                    let ungroupped = try JSONDecoder().decode(UngrouppedForecast.self, from: data)
+                    
+                    //TODO: Grouping & sorting fix
                     let today = Date()
-                    let grouping = Dictionary(grouping: forecastInfo.items, by: {
+                    let grouping = Dictionary(grouping: ungroupped.items, by: {
                         $0.dateTime.getTimeHorizon(from: today)
                     })
     
                     return grouping.map({ (key, values) in
-                        return Forecast(timeHorizon: key, items: values)
+                        return ForecastGroup(timeHorizon: key, items: values)
                     })
                 }
                 throw NetworkingError.apiError

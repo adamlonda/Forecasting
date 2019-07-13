@@ -13,12 +13,12 @@ class WeatherForecastViewController: UITableViewController {
     var locationService: LocationProtocol?
     var weatherService: WeatherForecastProtocol?
     
-    private var weatherForecast: [Forecast]?
+    private var weatherForecast: [ForecastGroup]?
     
     private var locationChanges: Disposable?
     private var locationErrors: Disposable?
     
-    private func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[Forecast]> {
+    private func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[ForecastGroup]> {
         if self.weatherService == nil {
             fatalError("Should not happen.")
         }
@@ -38,7 +38,7 @@ class WeatherForecastViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherForecast = [Forecast]()
+        weatherForecast = [ForecastGroup]()
         
         locationChanges = locationService?.locationFeed.flatMap({
             return self.getWeatherForecast(latitude: $0.latitude, longitude: $0.longitude)
