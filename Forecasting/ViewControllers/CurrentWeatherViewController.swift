@@ -9,6 +9,7 @@
 import RxSwift
 import UIKit
 
+//TODO: Weak-selves, fatalErros removal
 class CurrentWeatherViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var weatherLabel: UILabel!

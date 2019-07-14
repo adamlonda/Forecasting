@@ -95,32 +95,22 @@ struct ForecastItem: Decodable {
             return descriptives.written
         }
     }
-    
-//    let icon: String
-//    let description: String
-//    let temperatureKelvin: Float
+
     let dateTime: Date
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ForecastItemKeys.self)
         
-        let dateTime = try container.decode(Date.self, forKey: .dateTime)
+        let unixUtc = try container.decode(Double.self, forKey: .dateTime)
+        let dateTime = Date(timeIntervalSince1970: unixUtc)
+        
         let temperatureInfo = try container.decode(TemperatureInfo.self, forKey: .temperatureInfo)
         let descriptives = try container.decode([Descriptives].self, forKey: .descriptives)
         
         self.init(dateTime: dateTime, temperatureInfo: temperatureInfo, descriptives: descriptives[0])
     }
     
-    init(
-//        icon: String,
-//         description: String,
-//         temperatureKelvin: Float,
-         dateTime: Date,
-         temperatureInfo: TemperatureInfo,
-         descriptives: Descriptives) {
-//        self.icon = icon
-//        self.description = description
-//        self.temperatureKelvin = temperatureKelvin
+    init(dateTime: Date, temperatureInfo: TemperatureInfo, descriptives: Descriptives) {
         self.dateTime = dateTime
         self.temperatureInfo = temperatureInfo
         self.descriptives = descriptives

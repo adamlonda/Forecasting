@@ -6,6 +6,7 @@
 //  Copyright © 2019 Adam Londa. All rights reserved.
 //
 
+//TODO: Forecast-style refac
 struct CurrentWeather: Decodable {
     enum CurrentWeatherKeys: String, CodingKey {
         case locationName = "name"
