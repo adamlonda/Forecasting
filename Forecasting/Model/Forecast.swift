@@ -28,51 +28,45 @@ enum TimeHorizon: Int {
     }
 }
 
-struct TemperatureInfo: Decodable {
-    enum TemperatureInfoKeys: String, CodingKey {
-        case kelvin = "temp"
-    }
-    
-    let kelvin: Float
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: TemperatureInfoKeys.self)
-        let kelvin = try container.decode(Float.self, forKey: .kelvin)
-        self.init(kelvin: kelvin)
-    }
-    
-    init(kelvin: Float) {
-        self.kelvin = kelvin
-    }
-}
-
-struct Descriptives: Decodable {
-    enum DescriptivesKeys: String, CodingKey {
-        case icon = "icon"
-        case written = "main"
-    }
-    
-    let icon: String
-    let written: String
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: DescriptivesKeys.self)
-        let icon = try container.decode(String.self, forKey: .icon)
-        let written = try container.decode(String.self, forKey: .written)
-        self.init(icon: icon, written: written)
-    }
-    
-    init(icon: String, written: String) {
-        self.icon = icon
-        self.written = written
-    }
-}
-
 struct ForecastItem: Decodable {
-    enum ForecastItemKeys: String, CodingKey {
-        case dateTime = "dt"
-        case temperatureInfo = "main"
-        case descriptives = "weather"
+    struct TemperatureInfo: Decodable {
+        enum TemperatureInfoKeys: String, CodingKey {
+            case kelvin = "temp"
+        }
+        
+        let kelvin: Float
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: TemperatureInfoKeys.self)
+            let kelvin = try container.decode(Float.self, forKey: .kelvin)
+            self.init(kelvin: kelvin)
+        }
+        
+        init(kelvin: Float) {
+            self.kelvin = kelvin
+        }
+    }
+    
+    struct Descriptives: Decodable {
+        enum DescriptivesKeys: String, CodingKey {
+            case icon = "icon"
+            case written = "main"
+        }
+        
+        let icon: String
+        let written: String
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: DescriptivesKeys.self)
+            let icon = try container.decode(String.self, forKey: .icon)
+            let written = try container.decode(String.self, forKey: .written)
+            self.init(icon: icon, written: written)
+        }
+        
+        init(icon: String, written: String) {
+            self.icon = icon
+            self.written = written
+        }
     }
     
     private let temperatureInfo: TemperatureInfo
@@ -97,6 +91,12 @@ struct ForecastItem: Decodable {
     }
 
     let dateTime: Date
+    
+    enum ForecastItemKeys: String, CodingKey {
+        case dateTime = "dt"
+        case temperatureInfo = "main"
+        case descriptives = "weather"
+    }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ForecastItemKeys.self)

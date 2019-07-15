@@ -6,42 +6,31 @@
 //  Copyright © 2019 Adam Londa. All rights reserved.
 //
 
-//TODO: Forecast-style refac
 struct CurrentWeather: Decodable {
-    enum CurrentWeatherKeys: String, CodingKey {
-        case locationName = "name"
-        case weatherInfo = "weather"
-        case mainInfo = "main"
-        case windInfo = "wind"
-        case rainInfo = "rain"
-    }
-    
-    //MARK: Description & icon
-    struct WeatherInfo: Decodable {
-        enum WeatherInfoKeys: String, CodingKey {
-            case description = "main"
+    struct Descriptives: Decodable {
+        enum DescriptivesKeys: String, CodingKey {
+            case written = "main"
             case icon = "icon"
         }
         
-        let description: String
+        let written: String
         let icon: String
         
         init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: WeatherInfoKeys.self)
-            let description = try container.decode(String.self, forKey: .description)
+            let container = try decoder.container(keyedBy: DescriptivesKeys.self)
+            let written = try container.decode(String.self, forKey: .written)
             let icon = try container.decode(String.self, forKey: .icon)
-            self.init(description: description, icon: icon)
+            self.init(written: written, icon: icon)
         }
         
-        init(description: String, icon: String) {
-            self.description = description
+        init(written: String, icon: String) {
+            self.written = written
             self.icon = icon
         }
     }
     
-    //MARK: Temperature, pressure & humidity
-    struct MainInfo: Decodable {
-        enum MainInfoKeys: String, CodingKey {
+    struct WeatherData: Decodable {
+        enum WeatherDataKeys: String, CodingKey {
             case temperatureKelvin = "temp"
             case pressure = "pressure"
             case humidity = "humidity"
@@ -52,7 +41,7 @@ struct CurrentWeather: Decodable {
         let humidity: Int
         
         init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: MainInfoKeys.self)
+            let container = try decoder.container(keyedBy: WeatherDataKeys.self)
             let temperatureKelvin = try container.decode(Float.self, forKey: .temperatureKelvin)
             let pressure = try container.decode(Int.self, forKey: .pressure)
             let humidity = try container.decode(Int.self, forKey: .humidity)
@@ -70,7 +59,6 @@ struct CurrentWeather: Decodable {
         }
     }
     
-    //MARK: Wind speed & direction
     struct WindInfo: Decodable {
         enum WindInfoKeys: String, CodingKey {
             case speed = "speed"
@@ -93,7 +81,6 @@ struct CurrentWeather: Decodable {
         }
     }
     
-    //MARK: Rain volume
     struct RainInfo: Decodable {
         enum RainInfoKeys: String, CodingKey {
             case threeHours = "3h"
@@ -114,38 +101,38 @@ struct CurrentWeather: Decodable {
     
     let locationName: String
     
-    private let weatherInfo: WeatherInfo
-    private let mainInfo: MainInfo
+    private let descriptives: Descriptives
+    private let weatherData: WeatherData
     private let windInfo: WindInfo
     private let rainInfo: RainInfo?
     
     var icon: String {
         get {
-            return weatherInfo.icon
+            return descriptives.icon
         }
     }
     
     var description: String {
         get {
-            return weatherInfo.description
+            return descriptives.written
         }
     }
     
     var temperatureKelvin: Float {
         get {
-            return mainInfo.temperatureKelvin
+            return weatherData.temperatureKelvin
         }
     }
     
     var pressure: Int {
         get {
-            return mainInfo.pressure
+            return weatherData.pressure
         }
     }
     
     var humidity: Int {
         get {
-            return mainInfo.humidity
+            return weatherData.humidity
         }
     }
     
@@ -167,12 +154,20 @@ struct CurrentWeather: Decodable {
         }
     }
     
+    enum CurrentWeatherKeys: String, CodingKey {
+        case locationName = "name"
+        case descriptives = "weather"
+        case weatherData = "main"
+        case windInfo = "wind"
+        case rainInfo = "rain"
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CurrentWeatherKeys.self)
         
         let locationName = try container.decode(String.self, forKey: .locationName)
-        let weatherInfo = try container.decode([WeatherInfo].self, forKey: .weatherInfo)
-        let mainInfo = try container.decode(MainInfo.self, forKey: .mainInfo)
+        let descriptives = try container.decode([Descriptives].self, forKey: .descriptives)
+        let weatherData = try container.decode(WeatherData.self, forKey: .weatherData)
         let windInfo = try container.decode(WindInfo.self, forKey: .windInfo)
         
         let rainInfo: RainInfo?
@@ -183,21 +178,21 @@ struct CurrentWeather: Decodable {
         }
         
         self.init(locationName: locationName,
-                  weatherInfo: weatherInfo[0],
-                  mainInfo: mainInfo,
+                  descriptives: descriptives[0],
+                  weatherData: weatherData,
                   windInfo: windInfo,
                   rainInfo: rainInfo)
     }
     
     init(locationName: String,
-         weatherInfo: WeatherInfo,
-         mainInfo: MainInfo,
+         descriptives: Descriptives,
+         weatherData: WeatherData,
          windInfo: WindInfo,
          rainInfo: RainInfo?)
     {
         self.locationName = locationName
-        self.weatherInfo = weatherInfo
-        self.mainInfo = mainInfo
+        self.descriptives = descriptives
+        self.weatherData = weatherData
         self.windInfo = windInfo
         self.rainInfo = rainInfo
     }
