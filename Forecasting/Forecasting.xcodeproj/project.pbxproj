@@ -28,6 +28,7 @@
 		918B47ED2257A8A900B2EFF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 918B47EB2257A8A900B2EFF4 /* LaunchScreen.storyboard */; };
 		918B47F82257A8A900B2EFF4 /* ForecastingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918B47F72257A8A900B2EFF4 /* ForecastingTests.swift */; };
 		918B48032257A8A900B2EFF4 /* ForecastingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918B48022257A8A900B2EFF4 /* ForecastingUITests.swift */; };
+		91DC033D22DCFFC900F6F2D2 /* CommonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DC033C22DCFFC900F6F2D2 /* CommonError.swift */; };
 		BE7A0321AED953B274D239BB /* Pods_Forecasting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02C5727E86BBAE09E40685C /* Pods_Forecasting.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		918B47FE2257A8A900B2EFF4 /* ForecastingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ForecastingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		918B48022257A8A900B2EFF4 /* ForecastingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastingUITests.swift; sourceTree = "<group>"; };
 		918B48042257A8A900B2EFF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		91DC033C22DCFFC900F6F2D2 /* CommonError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonError.swift; sourceTree = "<group>"; };
 		DFC84C39B80E43D4D00ED38D /* Pods-Forecasting.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Forecasting.release.xcconfig"; path = "Pods/Target Support Files/Pods-Forecasting/Pods-Forecasting.release.xcconfig"; sourceTree = "<group>"; };
 		F02C5727E86BBAE09E40685C /* Pods_Forecasting.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Forecasting.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -122,6 +124,7 @@
 				910ED221225D140900B8AE14 /* GpsCoords.swift */,
 				9163569B2261075700C57048 /* CurrentWeather.swift */,
 				9170A08F226F2A1D0013D6ED /* Forecast.swift */,
+				91DC033C22DCFFC900F6F2D2 /* CommonError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				9141C38322723A1E00F0326C /* UIViewControllerExtensions.swift in Sources */,
 				910ED225225D159000B8AE14 /* LocationProtocol.swift in Sources */,
 				9141C37D226F383200F0326C /* WeatherForecastProtocol.swift in Sources */,
+				91DC033D22DCFFC900F6F2D2 /* CommonError.swift in Sources */,
 				9101E918227B76AC00B034C2 /* WeatherForecastTableViewCell.swift in Sources */,
 				9170A090226F2A1D0013D6ED /* Forecast.swift in Sources */,
 				916356A022610A1300C57048 /* CurrentWeatherService.swift in Sources */,

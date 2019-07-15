@@ -25,8 +25,7 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
         return RxAlamofire.requestData(.get, url)
             .map({ [weak self] (response, data) in
                 if (self == nil) {
-                    //TODO: CommonErrors enum
-                    fatalError("Runtime error")
+                    throw CommonError.runtimeError
                 }
                 
                 if (self!.check(response)) {
