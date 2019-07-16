@@ -9,7 +9,6 @@
 import RxSwift
 import UIKit
 
-//TODO: Weak-selves, fatalErros removal
 class CurrentWeatherViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var weatherLabel: UILabel!
@@ -27,17 +26,20 @@ class CurrentWeatherViewController: UIViewController {
     var locationService: LocationProtocol?
     var weatherService: CurrentWeatherProtocol?
     
-    private var locationChanges: Disposable?
-    private var locationErrors: Disposable?
+    private let disposeBag = DisposeBag()
     
-    private func getCurrentWeather(latitude: Double, longitude: Double) -> Observable<CurrentWeather> {
-        guard self.weatherService != nil else {
-            fatalError("Should not happen.")
+    private func getCurrentWeatherWithImage(latitude: Double, longitude: Double) -> Observable<(CurrentWeather, UIImage)> {
+        if self.weatherService == nil {
+            fatalError("Dependency injection error")
         }
         
-        return self.weatherService!.getCurrentWeather(
-            latitude: latitude,
-            longitude: longitude)
+        return self.weatherService!.getCurrentWeather(latitude: latitude, longitude: longitude)
+            .map({ currentWeather in
+                guard let weatherImage = UIImage(named: currentWeather.icon) else {
+                    throw CommonError.apiError
+                }
+                return (currentWeather, weatherImage)
+            })
     }
     
     private func setDefaultDisplay() {
@@ -52,20 +54,16 @@ class CurrentWeatherViewController: UIViewController {
         self.windDirectionLabel.text = notAvailableLabel
     }
     
-    private func display(_ currentWeather: CurrentWeather) {
-        guard let weatherImage = UIImage(named: currentWeather.icon) else {
-            fatalError("Weather code API error")
-        }
-        
+    private func display(_ currentWeather: CurrentWeather, with image: UIImage) {
         self.locationLabel.text = currentWeather.locationName
         self.weatherLabel.text = "\(celsiusLabelFrom(kelvin: currentWeather.temperatureKelvin)) | \(currentWeather.description)"
-        self.weatherImageView.image = weatherImage
+        self.weatherImageView.image = image
         
         self.humidityLabel.text = "\(currentWeather.humidity)%"
+        self.pressureLabel.text = "\(currentWeather.pressure) hPa"
         self.precipitationLabel.text = currentWeather.mmRainVolume != nil
             ? "\(currentWeather.mmRainVolume!) mm"
             : self.notAvailableLabel
-        self.pressureLabel.text = "\(currentWeather.pressure) hPa"
         
         self.windSpeedLabel.text = "\(Int(round(currentWeather.windSpeed * 3.6))) km/h"
         self.windDirectionLabel.text = "\(currentWeather.windDegrees.getWindDirection())".uppercased()
@@ -75,24 +73,24 @@ class CurrentWeatherViewController: UIViewController {
         super.viewDidLoad()
         setDefaultDisplay()
         
-        locationChanges = locationService?.locationFeed.flatMap({
-            self.getCurrentWeather(latitude: $0.latitude, longitude: $0.longitude)
+        locationService?.locationFeed.flatMap({ [weak self] gps -> Observable<(CurrentWeather, UIImage)> in
+            if (self == nil) {
+                throw CommonError.runtimeError
+            }
+            return self!.getCurrentWeatherWithImage(latitude: gps.latitude, longitude: gps.longitude)
         }).subscribe(
-            onNext: { currentWeather in
-                self.display(currentWeather)
+            onNext: { [weak self] weatherWithImage in
+                let weather = weatherWithImage.0
+                let image = weatherWithImage.1
+                self?.display(weather, with: image)
         },
-            onError: { _ in
-                self.presentNetworkError()
-        })
+            onError: { [weak self] _ in
+                self?.presentError()
+        }).disposed(by: disposeBag)
         
-        locationErrors = locationService?.errorFeed.subscribe(onNext: { _ in
-            self.presentGeolocationError()
-        })
-    }
-    
-    deinit {
-        locationChanges?.dispose()
-        locationErrors?.dispose()
+        locationService?.errorFeed.subscribe(onNext: { [weak self] _ in
+            self?.presentGeolocationError()
+        }).disposed(by: disposeBag)
     }
 }
 

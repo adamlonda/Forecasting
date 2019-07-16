@@ -12,7 +12,6 @@ enum NetworkingError: Error {
     case emptyResponse
     case noResponseCode
     case invalidApiKey
-    case apiError
 }
 
 class WeatherServiceBase {

@@ -33,7 +33,7 @@ class WeatherForecastService: WeatherServiceBase, WeatherForecastProtocol {
                     return self!.groupByTimeHorizon(ungroupped, from: Date())
                 }
                 
-                throw NetworkingError.apiError
+                throw CommonError.apiError
             })
     }
 }

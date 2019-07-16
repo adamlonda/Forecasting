@@ -8,4 +8,5 @@
 
 enum CommonError: Error {
     case runtimeError
+    case apiError
 }

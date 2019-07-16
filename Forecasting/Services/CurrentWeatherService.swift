@@ -17,7 +17,7 @@ class CurrentWeatherService: WeatherServiceBase, CurrentWeatherProtocol {
                 if (self?.check(response) == true) {
                     return try JSONDecoder().decode(CurrentWeather.self, from: data)
                 }
-                throw NetworkingError.apiError
+                throw CommonError.apiError
             })
     }
 }

@@ -26,10 +26,10 @@ extension UIViewController {
             message: "An error occured while getting your location. Please enable geolocation in your device settings for the Forecasting app, and try again.")
     }
     
-    func presentNetworkError() {
+    func presentError() {
         self.presentError(
-            title: "Network Error",
-            message: "An error occured while getting current weather. Please check your internet connection and try again later.")
+            title: "Error",
+            message: "An error occured while application is running, most propably connectivity issue. Please check your internet connection and try again later.")
     }
     
     func celsiusLabelFrom(kelvin: Float) -> String {

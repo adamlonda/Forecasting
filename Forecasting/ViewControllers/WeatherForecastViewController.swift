@@ -9,19 +9,17 @@
 import RxSwift
 import UIKit
 
-//TODO: Weak-selves, fatalErros removal
 class WeatherForecastViewController: UITableViewController {
     var locationService: LocationProtocol?
     var weatherService: WeatherForecastProtocol?
     
     private var weatherForecast: [ForecastGroup]?
     
-    private var locationChanges: Disposable?
-    private var locationErrors: Disposable?
+    private let disposeBag = DisposeBag()
     
     private func getWeatherForecast(latitude: Double, longitude: Double) -> Observable<[ForecastGroup]> {
         if self.weatherService == nil {
-            fatalError("Should not happen.")
+            fatalError("Dependency injection error")
         }
         return self.weatherService!.getWeatherForecast(latitude: latitude, longitude: longitude)
     }
@@ -30,25 +28,23 @@ class WeatherForecastViewController: UITableViewController {
         super.viewDidLoad()
         weatherForecast = [ForecastGroup]()
         
-        locationChanges = locationService?.locationFeed.flatMap({
-            return self.getWeatherForecast(latitude: $0.latitude, longitude: $0.longitude)
+        locationService?.locationFeed.flatMap({ [weak self] gps -> Observable<[ForecastGroup]> in
+            if (self == nil) {
+                throw CommonError.runtimeError
+            }
+            return self!.getWeatherForecast(latitude: gps.latitude, longitude: gps.longitude)
         }).subscribe(
-            onNext: { forecast in
-                self.weatherForecast = forecast
-                self.tableView.reloadData()
+            onNext: { [weak self] forecast in
+                self?.weatherForecast = forecast
+                self?.tableView.reloadData()
         },
-            onError: { error in
-                self.presentNetworkError()
-        })
+            onError: { [weak self] _ in
+                self?.presentError()
+        }).disposed(by: disposeBag)
         
-        locationErrors = locationService?.errorFeed.subscribe(onNext: { _ in
-            self.presentGeolocationError()
-        })
-    }
-    
-    deinit {
-        locationChanges?.dispose()
-        locationErrors?.dispose()
+        locationService?.errorFeed.subscribe(onNext: { [weak self] _ in
+            self?.presentGeolocationError()
+        }).disposed(by: disposeBag)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -77,7 +73,7 @@ class WeatherForecastViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "forecastTableViewCell", for: indexPath) as? WeatherForecastTableViewCell else {
-            fatalError("Table cell type mismatch")
+            fatalError("Missing table view cell")
         }
         
         guard let section = weatherForecast?[indexPath.section] else {
